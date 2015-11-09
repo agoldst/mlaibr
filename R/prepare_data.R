@@ -1,142 +1,194 @@
-
-## ---- read-ris-csv ----
-read_ris_csv <- function (filename) {
-    # define fields of interest: we'll only keep these columns 
-
-    keep_cols <- c("A2", "AU", "JO", "KW", "N1", "T1", "T2", "TY", "Y1", "PB")
-    ctypes <- setNames(rep(list("c"), length(keep_cols)), keep_cols)
-    frm <- withCallingHandlers( 
-        read_delim(filename, delim=",", quote="\"", escape_double=T,
-            col_names=T, 
-            col_types=do.call(cols_only, ctypes)
-        ),
-        warning=function (w) {
-            if (str_detect(w$message,
-                "^The following named parsers don't match the column names")) {
-                invokeRestart("muffleWarning")
-            }
-        }
-    )
-
-    # a couple of files have some missing columns because these fields
-    # were lacking in that run of entries,
-    # producing a column mismatch when we try to rbind everything.
-    # let's fix that by adding dummy values in those columns
-
-    missing_cols <- setdiff(keep_cols, colnames(frm))
-    if (length(missing_cols) > 0) {
-        frm[ , missing_cols] <- ""
-    }
-    frm
-}
-
-
-## ---- field-parsing ----
-# extract the finer-grained metadata from the note field N.B. There is
-# sometimes a missing period at the end of a field, e.g. in acc nos.
-# 1998070296, 1979107484, 1979202534, so this is imperfect
-
-
-
+#' Extract finer-grained metadata from the note field
+#'
+#' In the MLA bibliography, the N1 (note) field contains further metadata which is general consistently identified and can be programmatically extracted. Examples include the \code{Accession Number}, \code{Publication Type}, \code{DOI}, and \code{Peer Reviewed} fields.
+#'
+#' Fields are reliably delimited only by a terminating period, and 
+#' there is
+#' sometimes a missing period at the end of a field, e.g. in MLAIB acc nos.
+#' 1998070296, 1979107484, 1979202534. If the field data contains a period this 
+#' is a problem, but the only case in which I know this to happen is in \code{DOI} fields. This is treated as a special case.
+#'
+#' @param x character vector
+#' @param field name of field to extract (without colon). Case sensitive.
+#'
+#' @return character vector of extracted values. Validate carefully. Missing values are represented as \code{NA}.
+#'
+#' @examples
+#' \dontrun{
+#' b <- read_ris("bib.ris") %>%
+#'     spread_ris()
+#'
 #' # Extract peer reviewing flag
 #' # N.B. This information is very incomplete in the MLAIB
 #' b %>% 
-    mutate(peer=N1_field(N1, "Peer Reviewed") == "Yes")
-
+#'     mutate(peer=N1_field(N1, "Peer Reviewed") == "Yes")
+#'
 #' # Extract publication type
 #' # This is not just a recoding of the RIS field TY. Cross-tabulate.
 #' b %>%
-    mutate(pubtype=N1_field(N1, "Publication Type")) %>%
-    count(TY, pubtype)
-
-
-
-N1_field <- function (nn, field) {
+#'     mutate(pubtype=N1_field(N1, "Publication Type")) %>%
+#'     count(TY, pubtype)
+#' }
+#'
+#' @export
+#'
+N1_field <- function (x, field) {
     if (field == "DOI") {
-        stop("Use N1_doi to extract DOI information.")
+        return(N1_doi(x))
     }
 
-    nn %>%
-        str_extract(str_c("\\b", field, ": [^.]*\\.")) %>%
-        str_replace(str_c("^", field, ": "), "") %>%
-        str_replace("\\.$", "")
+    result <- stringr::str_extract(nn,
+        stringr::str_c("\\b", field, ": [^.]*\\."))
+    result <- stringr::str_replace(result,
+        stringr::str_c("^", field, ": "), "")
+    stringr::str_replace(result, "\\.$", "")
 }
 
 # DOI requires special treatment because it contains a period.
-N1_doi <- . %>%
-    str_extract("\\bDOI: [0-9a-zA-Z./]+\\.( |$)") %>%
-    str_replace("^DOI: ", "") %>%
-    str_replace("\\. ?$", "")
-
-# never mind the song and dance of extracting month and day fields
-Y1_Date <- . %>%
-    str_sub(1, 4) %>%
-    parse_date_time("%Y")
-
-
-
-## ---- subject-parsing ----
-strip_subject_relation <- function (s, pat) {
-    s %>%
-        str_replace_all(pat, "") %>%
-        # also strip subheading
-        str_replace(":.*$", "")
+N1_doi <- function (x) {
+    result <- stringr::str_extract(x, "\\bDOI: [0-9a-zA-Z./]+\\.( |$)")
+    result <- stringr::str_replace(result, "^DOI: ", "")
+    stringr::str_replace(result, "\\. ?$", "")
 }
 
-# table of ids and subject terms, one row for each id-term
-# (removing relational terms) so that "Joyce, James" and
-# "compared to Joyce, James" are collapsed into one hit
-#
-# the resulting data frame can be joined with the bib entries
-subjects_frame <- function (bib) {
-    rel_pat <- c("about", "after", "and", "application of( theories of)?",
-        "as", "at", "between", "by", "compared to", "contributions of",
-        "discusses", "during",
-        "especially", "for", "from", "in", "includes",
-        "influence( of| on)", "of", "on", "relationship to( the)?",
-        "role( in| of)", "sources in", "study example",
-        "the", "theories of",
-        "theory of theories of", # Ortega
-        "to( and from)?",
-        "treatment( in| of( the| decadence)?)?", # decadence: Swinburne
-        "use( in| of)", "with") %>%
-    str_c(collapse="|") %>%
-    str_c("^(", ., ") ") %>%
-    # compile
-    regex()
-
-    bib %>%
-        select(id, KW) %>%
-        group_by(id) %>%
-        transmute(term=str_split(KW, coll(";;"))) %>%
-        do(data_frame(
-            term=unlist(.$term)
-        )) %>%
-        ungroup() %>%
-        # Strip relation terms and subheading, twice. This is a childish way
-        # to deal with the grammar of subject relations, which can nest to
-        # arbitrary depth; but in practice two passes suffices.  
-        mutate(term=strip_subject_relation(term, rel_pat)) %>%
-        mutate(term=strip_subject_relation(term, rel_pat)) %>%
-        distinct(id, term)
+#' Naive parsing of dates into years
+#'
+#' The \code{Y1} field holds the publication date information. This normally contains a year, and sometimes also contains month, day, or season information. This function extracts just the year and recodes it as a \code{Date} on the first day of the year.
+#'
+#' @param x character vector (Y1 field)
+#' @return vector of \code{Date}s corresponding to years
+#'
+#' @examples
+#' \dontrun{
+#' # To get at the messy finer-grained information, try:
+#' str_split_fixed(x, coll("/"), 4)
+#' }
+#'
+#' @export
+#'
+Y1_year <- function (x) {
+    y <- stringr::str_sub(x, 1, 4)
+    as.Date(stringr::str_c(y, "-01-01")
 }
 
-subject_authors_frame <- . %>%
+
+#' Remove relational phrases from subject headings
+#'
+#' Many subject headings specify a relation to a term: not just "Joyce, James" but "compared to Joyce, James." For aggregating purposes, these relations can often be ignored. This function attempts to remove these relational phrases and leave only the main terms. Subheadings (delimited by a colon) are also removed.
+#'
+#' Since the relation terms can be composed ("compared to treatment of"), the function repeatedly strips the terms, up to a maximum number of iterations given by the package option \code{mlaib.rel_strip_iterations}. It issues a warning if relation terms are still present at the end.
+#'
+#' @param x character vector of headings
+#'
+#' @param rels character vector of regular expressions matching relation terms. The anchor \code{^} is added at the start and then the vector is collapsed using the alternator \code{|} as a separator. A default list is set as package option \code{mlaib.relations}, but this was found by trial and error and may need modification.
+#'
+#' @return the headings with relation terms removed
+#'
+#' @export
+#'
+strip_subject_relation <- function (x,
+                                    rels=options("mlaib.relations")) {
+    stopifnot(times > 0)
+    pat <- stringr::str_c(rels, collapse="|")
+    pat <- stringr::str_c("^(", pat, ") ")
+    pat <- stringr::regex(pat)
+    result <- x
+    for (i in 1:options("mlaib.rel_strip_iterations")) {
+        result <- stringr::str_replace_all(result, pat, "")
+        rels_still <- any(stringr::str_detect(result, pat))
+        if (!rels_still) {
+            break
+        }
+    }
+    if (rels_still) {
+        warning("Some relation terms still remain after ", n, " iterations.")
+    }
+    # also strip any subheading
+    result <- stringr::str_replace(result, ":.*$", "")
+    result
+}
+
+#' Generate a data frame of the id-subject-heading table
+#'
+#' It's often convenient to have a data frame with just subject terms and id's that can be filtered and then joined back onto a table of bibliographic items. This function is just a wrapper for filtering only \code{KW} fields and then applying \code{\link{strip_subject_relation}}.
+#'
+#' @param bib long-format table of RIS information
+#' @param rels character vector of relation patterns to pass to \code{\link{strip_subject_relation}}
+#'
+#' @return data frame with \code{id,value} columns
+#'
+#' @seealso \code{\link{subject_authors_frame}}
+#'
+#' @export
+#'
+subjects_frame <- function (bib, rels=options("mlaib.relations")) {
+    result <- dplyr::filter_(bib, ~ field == "KW")
+    result$value <- strip_subject_relation(result$value, rels)
+    result <- dplyr::select_(~ id, ~ value)
+    result <- dplyr::distinct_(~ id, ~ value)
+    result
+}
+
+#' Filter a subjects frame down to author-subjects
+#'
+#' Given the result form \code{\link{subjects_frame}}, remove all but the names 
+#' of authors. Any birth-death date ranges after names are removed. No further 
+#' de-duplication is performed.
+#'
+#' Note that removing date ranges potentially also removes a disambiguation 
+#' among authors were the same name. On your head be it.
+#'
+#' @param x data frame with author terms in a \code{value} column
+#'
+#' @param non_authors (optional) character vector of names to reject that 
+#' otherwise pass the filter.
+#'
+#' @return data frame like \code{x} but only rows where \code{value} is an author name 
+#' retained. You might wish to 
+#' use \code{\link[dplyr]{distinct}} to deduplicate this.
+#'
+#' @seealso \code{\link{subjects_frame}}
+#'
+#' @export
+#' 
+subject_authors_frame <- function (x, non_authors=NULL) {
 
     # find authors by looking for subjects that have a (YYYY- in them
-    # not perfect, because some books have a date range, like the Recherche,
-    # so we'll need a list of non-authors (explore$non_authors) below. 
-    filter(str_detect(term, " \\(\\d\\d\\d\\d\\??-")) %>%
-
+    x <- dplyr::filter_(x,
+        ~ stringr::str_detect(value, " \\(\\d\\d\\d\\d\\??-"))
     # MLAIB uses two U+00A0 NO-BREAK SPACEs in place of the death date
     # for living authors
-    mutate(term=str_replace(term, "\\([-0-9? \\x{a0}/ca.]*\\)", "")) %>%
-    mutate(term=str_trim(term)) %>%
-    filter(!str_detect(term, "^The "))
+    x$value <- stringr::str_trim(
+        stringr::str_replace(x$value, "\\([-0-9? \\x{a0}/ca.]*\\)", "")
+    )
 
-subject_authors_last <- . %>%
-    str_replace(",.*$", "") %>%
-    stri_trans_tolower()
+    # not perfect, because some books have a date range, like the Recherche.
+    # Assuming no one is named The X, this gets rid of some more
+    x <- dplyr::filter_(x, ~ !stringr::str_detect(value, "^The "))
+
+    # and an explicit list, if present, can filter further
+    if (length(non_authors) > 0) {
+        flt <- lazyeval::interp(~ !(value %in% xs), xs=non_authors)
+        x <- dplyr::filter_(x, flt)
+    }
+
+    x
+}
+
+#' Author term to lowercase last name only
+#'
+#' A convenience function for stripping down to an author keyword.
+#'
+#' @param values character vector of \code{"Last, First ..."} terms
+#'
+#' @return character vector of \code{"last"} names
+#'
+#' @export
+#'
+subject_authors_last <- function (values) {
+    result <- stringr::str_replace(values, ",.*$", "")
+    stringi::stri_trans_tolower(result)
+}
 
 
 # derive author series from subject series
