@@ -15,13 +15,16 @@
 #' @export
 #'
 strip_subject_relation <- function (x,
-                                    rels=options("mlaib.relations")) {
-    stopifnot(times > 0)
+                                    rels=getOption("mlaib.relations")) {
     pat <- stringr::str_c(rels, collapse="|")
     pat <- stringr::str_c("^(", pat, ") ")
     pat <- stringr::regex(pat)
     result <- x
-    for (i in 1:options("mlaib.rel_strip_iterations")) {
+    iters <- getOption("mlaib.rel_strip_iterations")
+    if (iters < 1) {
+        stop("mlaib.rel_strip_iterations must be greater than 0")
+    }
+    for (i in 1:iters) {
         result <- stringr::str_replace_all(result, pat, "")
         rels_still <- any(stringr::str_detect(result, pat))
         if (!rels_still) {
@@ -49,11 +52,11 @@ strip_subject_relation <- function (x,
 #'
 #' @export
 #'
-subjects_frame <- function (bib, rels=options("mlaib.relations")) {
+subjects_frame <- function (bib, rels=getOption("mlaib.relations")) {
     result <- dplyr::filter_(bib, ~ field == "KW")
     result$value <- strip_subject_relation(result$value, rels)
-    result <- dplyr::select_(~ id, ~ value)
-    result <- dplyr::distinct_(~ id, ~ value)
+    result <- dplyr::select_(result, ~ id, ~ value)
+    result <- dplyr::distinct_(result, ~ id, ~ value)
     result
 }
 
@@ -64,7 +67,7 @@ subjects_frame <- function (bib, rels=options("mlaib.relations")) {
 #' de-duplication is performed.
 #'
 #' Note that removing date ranges potentially also removes a disambiguation 
-#' among authors were the same name. On your head be it.
+#' among authors with the same name. On your head be it.
 #'
 #' @param x data frame with author terms in a \code{value} column
 #'
@@ -119,49 +122,6 @@ subject_authors_last <- function (values) {
 }
 
 
-# derive author series from subject series
-subject_author_series <- function(series, non_authors) {
-    auth_norm <- subject_author_norm(series, non_authors)
-
-    series %>% ungroup() %>%
-        inner_join(auth_norm, by="term") %>%
-        select(-term) %>%
-        group_by(date, author) %>%
-        summarize(weight=sum(weight)) %>%
-    # new baseline for freq: authors compared to other authors within
-    # a date interval
-        mutate(freq=weight / sum(weight))
-}
-
-
-title_author_series <- function(term_year, authors) {
-    authors <- sort(unique(authors))
-    term_year <- term_year[rownames(term_year) %in% authors, ]
-    message(nrow(term_year)," last names matched in titles")
-
-    term_year %>%
-        as.matrix() %>%
-        as.data.frame() %>%
-        mutate(term=rownames(term_year)) %>%
-        gather(date, weight, -term) %>%
-        group_by(date) %>%
-        mutate(freq=weight / sum(weight)) 
-}
-
-
-subject_series <- function(bib, kws, interval) {
-    bib$date <- cut.Date(bib$date, interval, ordered=T)
-    bib %>% ungroup() %>%
-        select_(~ id, ~ date, ~ weight) %>%
-        # use kws for keywords
-        inner_join(kws, by="id") %>%
-        # now aggregate
-        group_by(date, term) %>%
-        summarize(weight=sum(weight),
-                  doc_weight=n_distinct(id)) %>%
-        mutate(freq=weight / sum(weight),
-               doc_freq=doc_weight / sum(doc_weight))
-}
 
 
 
