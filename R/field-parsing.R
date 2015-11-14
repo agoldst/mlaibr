@@ -38,7 +38,7 @@ N1_field <- function (x, field) {
         return(N1_doi(x))
     }
 
-    result <- stringr::str_extract(nn,
+    result <- stringr::str_extract(x,
         stringr::str_c("\\b", field, ": [^.]*\\."))
     result <- stringr::str_replace(result,
         stringr::str_c("^", field, ": "), "")
