@@ -2,13 +2,24 @@
 
 #' Remove relational phrases from subject headings
 #'
-#' Many subject headings specify a relation to a term: not just "Joyce, James" but "compared to Joyce, James." For aggregating purposes, these relations can often be ignored. This function attempts to remove these relational phrases and leave only the main terms. Subheadings (delimited by a colon) are also removed.
+#' Many subject headings specify a relation to a term: not just "Joyce, James"
+#' but "compared to Joyce, James." For aggregating purposes, these relations can
+#' often be ignored. This function attempts to remove these relational phrases
+#' and leave only the main terms. Subheadings (delimited by a colon) are also
+#' removed.
 #'
-#' Since the relation terms can be composed ("compared to treatment of"), the function repeatedly strips the terms, up to a maximum number of iterations given by the package option \code{mlaib.rel_strip_iterations}. It issues a warning if relation terms are still present at the end.
+#' Since the relation terms can be composed ("compared to treatment of"), the
+#' function repeatedly strips the terms, up to a maximum number of iterations
+#' given by the package option \code{mlaib.rel_strip_iterations}. It issues a
+#' warning if relation terms are still present at the end.
 #'
 #' @param x character vector of headings
 #'
-#' @param rels character vector of regular expressions matching relation terms. The anchor \code{^} is added at the start and then the vector is collapsed using the alternator \code{|} as a separator. A default list is set as package option \code{mlaib.relations}, but this was found by trial and error and may need modification.
+#' @param rels character vector of regular expressions matching relation terms.
+#'   The anchor \code{^} is added at the start and then the vector is collapsed
+#'   using the alternator \code{|} as a separator. A default list is set as
+#'   package option \code{mlaib.relations}, but this was found by trial and
+#'   error and may need modification.
 #'
 #' @return the headings with relation terms removed
 #'
@@ -41,10 +52,14 @@ strip_subject_relation <- function (x,
 
 #' Generate a data frame of the id-subject-heading table
 #'
-#' It's often convenient to have a data frame with just subject terms and id's that can be filtered and then joined back onto a table of bibliographic items. This function is just a wrapper for filtering only \code{KW} fields and then applying \code{\link{strip_subject_relation}}.
+#' It's often convenient to have a data frame with just subject terms and id's
+#' that can be filtered and then joined back onto a table of bibliographic
+#' items. This function is just a wrapper for filtering only \code{KW} fields
+#' and then applying \code{\link{strip_subject_relation}}.
 #'
 #' @param bib long-format table of RIS information
-#' @param rels character vector of relation patterns to pass to \code{\link{strip_subject_relation}}
+#' @param rels character vector of relation patterns to pass to
+#'   \code{\link{strip_subject_relation}}
 #'
 #' @return data frame with \code{id,value} columns
 #'
@@ -62,26 +77,26 @@ subjects_frame <- function (bib, rels=getOption("mlaib.relations")) {
 
 #' Filter a subjects frame down to author-subjects
 #'
-#' Given the result form \code{\link{subjects_frame}}, remove all but the names 
-#' of authors. Any birth-death date ranges after names are removed. No further 
+#' Given the result form \code{\link{subjects_frame}}, remove all but the names
+#' of authors. Any birth-death date ranges after names are removed. No further
 #' de-duplication is performed.
 #'
-#' Note that removing date ranges potentially also removes a disambiguation 
+#' Note that removing date ranges potentially also removes a disambiguation
 #' among authors with the same name. On your head be it.
 #'
 #' @param x data frame with author terms in a \code{value} column
 #'
-#' @param non_authors (optional) character vector of names to reject that 
-#' otherwise pass the filter.
+#' @param non_authors (optional) character vector of names to reject that
+#'   otherwise pass the filter.
 #'
-#' @return data frame like \code{x} but only rows where \code{value} is an author name 
-#' retained. You might wish to 
-#' use \code{\link[dplyr]{distinct}} to deduplicate this.
+#' @return data frame like \code{x} but only rows where \code{value} is an
+#'   author name retained. You might wish to use \code{\link[dplyr]{distinct}}
+#'   to deduplicate this.
 #'
 #' @seealso \code{\link{subjects_frame}}
 #'
 #' @export
-#' 
+#'
 subject_authors_frame <- function (x, non_authors=NULL) {
 
     # find authors by looking for subjects that have a (YYYY- in them

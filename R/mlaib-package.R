@@ -1,12 +1,13 @@
 
 #' Explore MLA bibliography data
-#' 
-#' This package gives some rudimentary utilities for loading and preprocessing 
-#' MLA International Bibliography data or other RIS-formatted bibliographic data.
-#' 
+#'
+#' This package gives some rudimentary utilities for loading and preprocessing
+#' MLA International Bibliography data or other RIS-formatted bibliographic
+#' data.
+#'
 #' @name mlaib
 #' @docType package
-#'   
+#'
 NULL
 
 

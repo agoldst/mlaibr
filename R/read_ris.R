@@ -1,14 +1,17 @@
 #' Read in a CSV file of converted RIS data
 #'
 #' Deprecated. Use \code{\link{read_ris}} unless the speed gain is important.
-#' Read in the result of \code{\link{convert_ris}}. Note that this function returns a \emph{wide}-format rather than long-format data frame and does not add any ID column.
+#' Read in the result of \code{\link{convert_ris}}. Note that this function
+#' returns a \emph{wide}-format rather than long-format data frame and does not
+#' add any ID column.
 #'
 #' @param filename file to read in, produced from \code{\link{convert_ris}}.
 #' @param columns RIS fields to retain (NULL to retain all)
-#' 
-#' @return wide format data frame with one row for each item and one column for each field.
 #'
-#' @export 
+#' @return wide format data frame with one row for each item and one column for
+#'   each field.
+#'
+#' @export
 read_ris_csv <- function (filename,
                           columns=getOption("mlaib.ris_keep")) {
 
@@ -19,7 +22,7 @@ read_ris_csv <- function (filename,
         ctypes <- setNames(rep(list("c"), length(keep_cols)), keep_cols)
         ctypes <- do.call(readr::cols_only, ctypes)
     }
-    frm <- withCallingHandlers( 
+    frm <- withCallingHandlers(
         readr::read_delim(filename, delim=",", quote="\"", escape_double=TRUE,
             col_names=TRUE,
             col_types=ctypes
@@ -46,11 +49,15 @@ read_ris_csv <- function (filename,
 #' Convert an RIS file to CSV format
 #'
 #' Deprecated. Use \code{\link{read_ris}} unless the speed gain is important.
-#' Convert RIS to CSV using a Python script; the output can be loaded with \code{\link{read_ris_csv}}.  Note that this generates a \emph{wide}-format rather than long-format data frame.
+#' Convert RIS to CSV using a Python script; the output can be loaded with
+#' \code{\link{read_ris_csv}}.  Note that this generates a \emph{wide}-format
+#' rather than long-format data frame.
 #'
 #' @param in_file RIS file to process
 #'
-#' @param out_file name of CSV file to write. This is passed to \code{\link[base]{system2}} as the \code{stdout} parameter, so set \code{out_file=T} to get the output back as the function return value.
+#' @param out_file name of CSV file to write. This is passed to
+#'   \code{\link[base]{system2}} as the \code{stdout} parameter, so set
+#'   \code{out_file=T} to get the output back as the function return value.
 #'
 #' @return return value from \code{\link[base]{system2}}.
 #' @export
@@ -63,14 +70,25 @@ convert_ris <- function (in_file, out_file) {
 
 #' Convert bibliographic records from long to wide format
 #'
-#' The data frame from \code{\link{read_ris}} has many rows for each bibliographic record. Many questions relate to bibliographic items as a unit, in which case it is convenient to have a data frame in the corresponding wide form. However, note that this is a somewhat non-normalized format since many RIS fields can repeat within a record. Repeat fields are joined into a single string value.
+#' The data frame from \code{\link{read_ris}} has many rows for each
+#' bibliographic record. Many questions relate to bibliographic items as a unit,
+#' in which case it is convenient to have a data frame in the corresponding wide
+#' form. However, note that this is a somewhat non-normalized format since many
+#' RIS fields can repeat within a record. Repeat fields are joined into a single
+#' string value.
 #'
-#' It would be a little more formal to produce list columns from repeating fields, but that's just a drag. It may make more sense to normalize by hand by making separate tables of the repeating columns and keying to ID (or accession number), then spreading out only the single columns of interest here.
+#' It would be a little more formal to produce list columns from repeating
+#' fields, but that's just a drag. It may make more sense to normalize by hand
+#' by making separate tables of the repeating columns and keying to ID (or
+#' accession number), then spreading out only the single columns of interest
+#' here.
 #'
 #' @param x data frame with \code{id,field,value} columns
-#' @param multi_sep separator string for repeated fields. Should not occur within field values.
+#' @param multi_sep separator string for repeated fields. Should not occur
+#'   within field values.
 #'
-#' @return data frame with one row for each bibliographic item record and one column for each field. Missing values are represented with \code{NA}.
+#' @return data frame with one row for each bibliographic item record and one
+#'   column for each field. Missing values are represented with \code{NA}.
 #'
 #' @seealso \code{\link{read_ris}}
 #' @export
@@ -87,13 +105,21 @@ spread_ris <- function (x, multi_sep=";;") {
 }
 
 #' Read RIS files into a long-format data frame
-#' 
-#' This function loads one or more RIS files into a long data frame. It assigns unique record ID numbers and optionally filters out unwanted fields. The result has one line for each record-field combination, including possible repeats when a record has multiple instances of a field.
-#' The result is not quite "tidy," because no special parsing is done to extract information within the catch-all \code{N1} field; use \code{\link{N1_field}} for that. Note also that all fields remain in string format; for example, dates are not parsed (see \code{\link{Y1_date}}).
-#' To project to a data frame with one row for each bibliographic record, use \code{\link{spread_ris}}.
+#'
+#' This function loads one or more RIS files into a long data frame. It assigns
+#' unique record ID numbers and optionally filters out unwanted fields. The
+#' result has one line for each record-field combination, including possible
+#' repeats when a record has multiple instances of a field. The result is not
+#' quite "tidy," because no special parsing is done to extract information
+#' within the catch-all \code{N1} field; use \code{\link{N1_field}} for that.
+#' Note also that all fields remain in string format; for example, dates are not
+#' parsed (see \code{\link{Y1_date}}). To project to a data frame with one row
+#' for each bibliographic record, use \code{\link{spread_ris}}.
 #'
 #' @param filenames vector of RIS files to read.
-#' @param fields which RIS fields to keep in the result. A default list is set by the package option \code{mlaib.ris_keep}. To keep all fields, set \code{fields=NULL}. 
+#' @param fields which RIS fields to keep in the result. A default list is set
+#'   by the package option \code{mlaib.ris_keep}. To keep all fields, set
+#'   \code{fields=NULL}.
 #'
 #' @return a data frame with columns \code{id,field,value}
 #'
@@ -142,8 +168,8 @@ read_ris_file <- function (filename) {
     result <- result[stringr::str_detect(result$value, "\\S"), ]
 
     # split field key from value
-    sp <- stringr::str_split(result$value, stringr::coll("  -"), n=2) 
-    result$field <- vapply(sp, `[[`, "", 1) 
+    sp <- stringr::str_split(result$value, stringr::coll("  -"), n=2)
+    result$field <- vapply(sp, `[[`, "", 1)
     result$value <- stringr::str_trim(vapply(sp, `[[`, "", 2))
 
     # rename columns
