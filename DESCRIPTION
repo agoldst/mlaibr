@@ -1,0 +1,19 @@
+Package: mlaib
+Title: Tools for exploring data from the MLA bibliography
+Description: This package provides tools for exploring data from the MLA International Bibliography exported to RIS format.
+Version: 0.1
+Authors@R: person("Andrew", "Goldstone", email = "andrew.goldstone@gmail.com", role = c("aut", "cre"))
+Depends: R (>= 3.2.2)
+Imports: 
+    stringr,
+    dplyr,
+    lazyeval,
+    tidyr,
+    lubridate,
+    readr,
+    magrittr
+Suggests: 
+    testthat
+SystemRequirements: python
+License: MIT
+LazyData: true
