@@ -32,21 +32,21 @@ tfile <- tempfile()
 writeLines(test_data, tfile)
 
 test_that("loading RIS data files works", {
-    read_ris(tfile) %>%
+    mlaib:::read_ris_file(tfile) %>%
         expect_equal(test_target, info="Loading single file")
     
-    read_ris_files(tfile) %>%
+    read_ris(tfile) %>%
         expect_equal(test_target,
-                     info="Loading single file with read_ris_files")
+                     info="Loading single file with read_ris")
     
     double_target <- dplyr::bind_rows(test_target, test_target) %>%
         dplyr::mutate(id=id + rep(c(0,2), each=12))
 
-    read_ris_files(c(tfile, tfile)) %>% 
+    read_ris(c(tfile, tfile)) %>% 
         expect_equal(double_target, info="Loading multiple files")
 
     restricted_fields <- c("TY", "AU", "T1", "KW")
-    read_ris_files(c(tfile, tfile), fields=restricted_fields) %>% 
+    read_ris(c(tfile, tfile), fields=restricted_fields) %>% 
         expect_equal(
             double_target %>%
                 dplyr::filter(field %in% restricted_fields) %>%
