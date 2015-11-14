@@ -1,0 +1,75 @@
+
+test_data <- c(
+"TY  - JOUR
+AU  - Hutchison, Percy Adams
+T1  - Poetry, Philosophy, and Religion
+JO  - PMLA
+Y1  - 1907
+ER  - 
+
+TY  - JOUR
+AU  - Fletcher, Jefferson B.
+T1  - Dante's 'Second Love'
+JO  - Modern Philology
+Y1  - 1915/07
+KW  - Italian literature
+KW  - Vita nuova
+ER  - 
+")
+
+test_target <- dplyr::data_frame(
+    id=as.numeric(rep(1:2, times=c(5, 7))),
+    field=c("TY", "AU", "T1", "JO", "Y1", "TY", "AU",
+            "T1", "JO", "Y1", "KW", "KW"),
+    value=c("JOUR", "Hutchison, Percy Adams",
+            "Poetry, Philosophy, and Religion",
+            "PMLA", "1907", "JOUR", "Fletcher, Jefferson B.",
+            "Dante's 'Second Love'", "Modern Philology", "1915/07",
+            "Italian literature", "Vita nuova")
+)
+
+tfile <- tempfile()
+writeLines(test_data, tfile)
+
+test_that("loading RIS data files works", {
+    read_ris(tfile) %>%
+        expect_equal(test_target, info="Loading single file")
+    
+    read_ris_files(tfile) %>%
+        expect_equal(test_target,
+                     info="Loading single file with read_ris_files")
+    
+    double_target <- dplyr::bind_rows(test_target, test_target) %>%
+        dplyr::mutate(id=id + rep(c(0,2), each=12))
+
+    read_ris_files(c(tfile, tfile)) %>% 
+        expect_equal(double_target, info="Loading multiple files")
+
+    restricted_fields <- c("TY", "AU", "T1", "KW")
+    read_ris_files(c(tfile, tfile), fields=restricted_fields) %>% 
+        expect_equal(
+            double_target %>%
+                dplyr::filter(field %in% restricted_fields) %>%
+                dplyr::mutate(id=as.numeric(rep(1:4, times=c(3, 5, 3, 5)))),
+            info="Load file with field restriction"
+        )
+})
+
+test_that("spreading RIS data works", {
+    read_ris(tfile) %>%
+        spread_ris() %>%
+        expect_equal(dplyr::data_frame(
+            id=as.numeric(1:2),
+            TY=rep("JOUR", 2),
+            AU=c("Hutchison, Percy Adams", "Fletcher, Jefferson B."),
+            T1=c("Poetry, Philosophy, and Religion", "Dante's 'Second Love'"),
+            JO=c("PMLA", "Modern Philology"),
+            Y1=c("1907", "1915/07"), 
+            KW=c(NA, "Italian literature;;Vita nuova")
+        ))
+})
+
+        
+if (file.exists(tfile)) {
+    unlink(tfile)
+}

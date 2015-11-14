@@ -69,5 +69,5 @@ N1_doi <- function (x) {
 #'
 Y1_year <- function (x) {
     y <- stringr::str_sub(x, 1, 4)
-    as.Date(stringr::str_c(y, "-01-01")
+    as.Date(stringr::str_c(y, "-01-01"))
 }

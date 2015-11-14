@@ -1,6 +1,28 @@
 
+#' Explore MLA bibliography data
+#' 
+#' This package gives some rudimentary utilities for loading and preprocessing 
+#' MLA International Bibliography data or other RIS-formatted bibliographic data.
+#' 
+#' @name mlaib
+#' @docType package
+#'   
+NULL
 
 
+#' Pipe operator
+#'
+#' See \code{\link[magrittr]{\%>\%}} for more details.
+#'
+#' @name %>%
+#' @rdname pipe
+#' @keywords internal
+#' @export
+#' @importFrom magrittr %>%
+#' @usage lhs \%>\% rhs
+NULL
+
+# initialize package options if they haven't been set
 .onLoad <- function(libname, pkgname) {
     op_old <- options()
     op <- list(
@@ -19,7 +41,7 @@
             "to( and from)?",
             "treatment( in| of( the)?)?",
             "use( in| of)", "with"
-        )
+        ),
         mlaib.rel_strip_iterations=2
     )
   to_set <- !(names(op) %in% names(op_old))

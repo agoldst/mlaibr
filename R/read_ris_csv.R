@@ -10,7 +10,7 @@
 #'
 #' @export 
 read_ris_csv <- function (filename,
-                          columns=options("mlaib.ris_keep")) {
+                          columns=getOption("mlaib.ris_keep")) {
 
     if (length(columns == 0)) {
         # by default, get everything as a string
@@ -76,7 +76,7 @@ read_ris <- function (filename) {
                          stringsAsFactors=FALSE)
     result <- result[!ers, ]
     result <- result[result$value != "", ]
-    sp <- stringr::str_split(result$value, coll("  -"), n=2)
+    sp <- stringr::str_split(result$value, stringr::coll("  -"), n=2)
     result$field <- vapply(sp, `[[`, "", 1)
     result$value <- stringr::str_trim(vapply(sp, `[[`, "", 2))
     result <- result[ , c("id", "field", "value")]
@@ -109,11 +109,13 @@ read_ris <- function (filename) {
 #' @export
 #'
 spread_ris <- function (x, multi_sep=";;") {
+    sm <- lazyeval::interp(~ stringr::str_c(value, collapse=x), x=multi_sep)
+
     x <- dplyr::summarize_(
         dplyr::group_by_(x, ~ id, ~ field),
-        field= ~ stringr::str_c(value, collapse=multi_sep)
+        value= sm
     )
-    tidyr::spread_(x, "id", "field", fill=NA)
+    tidyr::spread_(x, "field", "value", fill=NA)
 
 }
 
@@ -129,7 +131,7 @@ spread_ris <- function (x, multi_sep=";;") {
 #' @seealso \code{\link{spread_ris}}
 #' @export
 #'
-read_ris_files <- function (filenames, fields=options("mlaib.ris_keep")) {
+read_ris_files <- function (filenames, fields=getOption("mlaib.ris_keep")) {
     result <- vector("list", length(filenames))
     base_id <- 0
 
