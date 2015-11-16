@@ -58,8 +58,21 @@ test_that("subject frame generation works", {
         info="Spot check of subject-relation stripping")
 })
 
+test_that("author detection works", {
+    expect_true(is_author("Shakespeare, William (1564-1616)"))
+    expect_true(is_author("Drummond, Sir William (1770?-1828)"))
+    expect_true(is_author("Coetzee, J. M. (1940-  )"))
+    expect_true(is_author("Boccaccio, Giovanni (ca. 1313-1375)"))
+    
+    # and the known failure mode
+    expect_true(is_author("A la recherche du temps perdu (1913-1929)"),
+                info="Known error with titles that have date ranges")
+})
+
 test_that("subject author extraction works", {
-    sa <- subject_authors_frame(s)
+    sa <- s %>%
+        dplyr::filter(is_author(value)) %>%
+        dplyr::mutate(value=subject_author(value))
     expect_equal(sa, dplyr::data_frame(
         id=as.numeric(rep(1:3, times=c(3, 1, 4))),
         value=c(
@@ -76,8 +89,10 @@ test_that("subject author extraction works", {
 })
 
 test_that("last names are extracted correctly", {
-    sa <- subject_authors_frame(s)
-    expect_equal(subject_authors_last(sa$value),
+    sa <- s %>%
+        dplyr::filter(is_author(value)) %>%
+        dplyr::mutate(value=subject_author(value))
+    expect_equal(subject_author_last(sa$value),
         c("shelley", "wordsworth", "drummond", "thoreau", "stein",
           "santayana", "stevens", "james")
     )

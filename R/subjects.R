@@ -52,12 +52,13 @@ strip_subject_relation <- function (x,
 
 #' Generate a data frame of the id-subject-heading table
 #'
-#' It's often convenient to have a data frame with just subject terms and id's
-#' that can be filtered and then joined back onto a table of bibliographic
-#' items. This function is just a wrapper for filtering only \code{KW} fields
-#' and then applying \code{\link{strip_subject_relation}}.
+#' It's often useful to have a data frame with just subject terms and id's that
+#' can be filtered and then joined back onto a table of bibliographic items.
+#' This function is just a convenience wrapper for filtering only \code{KW}
+#' fields and then applying \code{\link{strip_subject_relation}}.
 #'
-#' @param bib long-format table of RIS information
+#' @param bib long-format table of RIS information with \code{id,field,value}
+#'   columns from \code{\link{read_ris}}
 #' @param rels character vector of relation patterns to pass to
 #'   \code{\link{strip_subject_relation}}
 #'
@@ -75,64 +76,84 @@ subjects_frame <- function (bib, rels=getOption("mlaib.relations")) {
     result
 }
 
-#' Filter a subjects frame down to author-subjects
+#' Detect author names among subject headings
 #'
-#' Given the result form \code{\link{subjects_frame}}, remove all but the names
-#' of authors. Any birth-death date ranges after names are removed. No further
-#' de-duplication is performed.
+#' Given a vector of subject terms, determine which are (likely) author terms.
+#'
+#' The heuristic is simply to look for a (possibly open-ended) birth-death date
+#' range in the term. Note that this is highly imperfect, since books and
+#' periodicals often also have date ranges. I have not found an alternative to
+#' removing these by hand.
+#'
+#' @param x character vector of subject terms
+#'
+#' @return logical vector indicating whether the corresponding element of
+#'   \code{x} is an author term.
+#'
+#' @seealso \code{\link{subjects_frame}}, \code{\link{subject_author}}
+#'
+#' @examples
+#' is_author("Joyce, James (1882-1941)")
+#'
+#' is_author("South Asian literature")
+#'
+#' # but N.B.
+#' is_author("A la recherche du temps perdu (1913-1929)")
+#'
+#' @export
+#'
+is_author <- function (x) {
+    # find authors by looking for subjects that have a birthdate
+    # indication (YYYY- or (YYY-) or (ca. YYYY-) etc. MLAIB uses
+    # no-break spaces after ca. and fl. This is not perfect, because
+    # some books have a date range, like the Recherche.
+    result <- stringr::str_detect(x,
+        " \\((fl\\.\\x{a0})?(ca\\.\\x{a0})?\\d\\d\\d\\d?\\??-")
+    # Assuming no one is named The X, this gets rid of some more
+    result <- result & !stringr::str_detect(x, "^The ")
+    result
+}
+
+#' Convert subject terms for authors to names alone
+#'
+#' Given subject terms containing author names, strip away date ranges to yield
+#' \code{"Last, First Middle Middle"} names. No further de-duplication is
+#' performed. Subheadings and relation terms are assumed already stripped (as by
+#' \code{\link{strip_subject_relation}}).
 #'
 #' Note that removing date ranges potentially also removes a disambiguation
 #' among authors with the same name. On your head be it.
 #'
-#' @param x data frame with author terms in a \code{value} column
+#' @param x character vector of subject terms
+#' @return character vector of author terms
 #'
-#' @param non_authors (optional) character vector of names to reject that
-#'   otherwise pass the filter.
+#' @seealso \code{\link{subjects_frame}}, \code{\link{is_author}}
 #'
-#' @return data frame like \code{x} but only rows where \code{value} is an
-#'   author name retained. You might wish to use \code{\link[dplyr]{distinct}}
-#'   to deduplicate this.
-#'
-#' @seealso \code{\link{subjects_frame}}
+#' @examples
+#' subject_author("Joyce, James (1882-1941)")
 #'
 #' @export
 #'
-subject_authors_frame <- function (x, non_authors=NULL) {
-
-    # find authors by looking for subjects that have a (YYYY- in them
-    x <- dplyr::filter_(x,
-        ~ stringr::str_detect(value, " \\(\\d\\d\\d\\d\\??-"))
-    # MLAIB uses two U+00A0 NO-BREAK SPACEs in place of the death date
-    # for living authors
-    x$value <- stringr::str_trim(
-        stringr::str_replace(x$value, "\\([-0-9? \\x{a0}/ca.]*\\)", "")
+subject_author <- function (x) {
+    # date ranges can include numbers, dashes, spaces, no-break spaces,
+    # and "ca." and "fl."
+    stringr::str_trim(
+        stringr::str_replace(x, "\\([-0-9? \\x{a0}/cafl.]*\\)", "")
     )
-
-    # not perfect, because some books have a date range, like the Recherche.
-    # Assuming no one is named The X, this gets rid of some more
-    x <- dplyr::filter_(x, ~ !stringr::str_detect(value, "^The "))
-
-    # and an explicit list, if present, can filter further
-    if (length(non_authors) > 0) {
-        flt <- lazyeval::interp(~ !(value %in% xs), xs=non_authors)
-        x <- dplyr::filter_(x, flt)
-    }
-
-    x
 }
 
 #' Author term to lowercase last name only
 #'
 #' A convenience function for stripping down to an author keyword.
 #'
-#' @param values character vector of \code{"Last, First ..."} terms
+#' @param x character vector of \code{"Last, First ..."} terms
 #'
 #' @return character vector of \code{"last"} names
 #'
 #' @export
 #'
-subject_authors_last <- function (values) {
-    result <- stringr::str_replace(values, ",.*$", "")
+subject_author_last <- function (x) {
+    result <- stringr::str_replace(x, ",.*$", "")
     stringi::stri_trans_tolower(result)
 }
 

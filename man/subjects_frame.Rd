@@ -7,7 +7,8 @@
 subjects_frame(bib, rels = getOption("mlaib.relations"))
 }
 \arguments{
-\item{bib}{long-format table of RIS information}
+\item{bib}{long-format table of RIS information with \code{id,field,value}
+columns from \code{\link{read_ris}}}
 
 \item{rels}{character vector of relation patterns to pass to
   \code{\link{strip_subject_relation}}}
@@ -16,10 +17,10 @@ subjects_frame(bib, rels = getOption("mlaib.relations"))
 data frame with \code{id,value} columns
 }
 \description{
-It's often convenient to have a data frame with just subject terms and id's
-that can be filtered and then joined back onto a table of bibliographic
-items. This function is just a wrapper for filtering only \code{KW} fields
-and then applying \code{\link{strip_subject_relation}}.
+It's often useful to have a data frame with just subject terms and id's that
+can be filtered and then joined back onto a table of bibliographic items.
+This function is just a convenience wrapper for filtering only \code{KW}
+fields and then applying \code{\link{strip_subject_relation}}.
 }
 \seealso{
 \code{\link{subject_authors_frame}}
