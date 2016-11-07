@@ -4,47 +4,38 @@
 #'
 #' Many subject headings specify a relation to a term: not just "Joyce, James"
 #' but "compared to Joyce, James." For aggregating purposes, these relations can
-#' often be ignored. This function attempts to remove these relational phrases
-#' and leave only the main terms. Subheadings (delimited by a colon) are also
-#' removed.
-#'
-#' Since the relation terms can be composed ("compared to treatment of"), the
-#' function repeatedly strips the terms, up to a maximum number of iterations
-#' given by the package option \code{mlaib.rel_strip_iterations}. It issues a
-#' warning if relation terms are still present at the end.
+#' often be ignored. This function attempts to remove any number of these
+#' relational phrases found at the start of a term, leaving only the main terms.
+#' Subheadings (delimited by a colon) are also removed.
 #'
 #' @param x character vector of headings
 #'
 #' @param rels character vector of regular expressions matching relation terms.
-#'   The anchor \code{^} is added at the start and then the vector is collapsed
-#'   using the alternator \code{|} as a separator. A default list is set as
-#'   package option \code{mlaib.relations}, but this was found by trial and
-#'   error and may need modification.
+#'   The anchor \code{^} is added at the start, a space is added to the end of
+#'   each term, and then the vector is collapsed using the alternator \code{|}
+#'   as a separator. One or more occurrences of this big pattern are removed. A
+#'   default list is set as package option \code{mlaib.relations}, but this was
+#'   found by trial and error and may need modification.
 #'
-#' @return the headings with relation terms removed
+#' @return the headings with relation terms removed (hopefully)
+#'
+#' @examples
+#'
+#' strip_subject_relation("sources in James, William (1842-1910)")
+#' strip_subject_relation("compared to Wordsworth, William (1770-1850): 'Intimations of Immortality from Recollections of Early Childhood'")
+#'
+#' strip_subject_relation("discusses theories of relationship to realism")
 #'
 #' @export
 #'
 strip_subject_relation <- function (x,
                                     rels=getOption("mlaib.relations")) {
-    pat <- stringr::str_c(rels, collapse="|")
-    pat <- stringr::str_c("^(", pat, ") ")
+    pat <- stringr::str_c(rels, " ")
+    pat <- stringr::str_c(pat, collapse="|")
+    pat <- stringr::str_c("^(", pat, ")+")
     pat <- stringr::regex(pat)
-    result <- x
-    iters <- getOption("mlaib.rel_strip_iterations")
-    if (iters < 1) {
-        stop("mlaib.rel_strip_iterations must be greater than 0")
-    }
-    for (i in 1:iters) {
-        result <- stringr::str_replace_all(result, pat, "")
-        rels_still <- any(stringr::str_detect(result, pat))
-        if (!rels_still) {
-            break
-        }
-    }
-    if (rels_still) {
-        warning("Some relation terms still remain after ", n, " iterations.")
-    }
+    result <- stringr::str_replace(x, pat, "")
+
     # also strip any subheading
     result <- stringr::str_replace(result, ":.*$", "")
     result

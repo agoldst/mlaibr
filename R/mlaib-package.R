@@ -42,8 +42,7 @@ NULL
             "to( and from)?",
             "treatment( in| of( the)?)?",
             "use( in| of)", "with"
-        ),
-        mlaib.rel_strip_iterations=2
+        )
     )
   to_set <- !(names(op) %in% names(op_old))
   if (any(to_set)) options(op[to_set])
