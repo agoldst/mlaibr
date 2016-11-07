@@ -25,8 +25,14 @@ In the MLAIB, important supplemental information is contained in the `N1` field,
 
 Finally, I include a couple of some utilities for dealing with MLAIB subject headings, which are found in `KW` fields (many for each record). `strip_subject_relation` is for removing relation terms ("compared to," etc.). `is_author` uses the presence of birth-death dates as a simple heuristic for detecting personal names as subject headings (but works with a data range are misidentified as persons).
 
-# System Requirements
+# System requirements
 
 Automatic handling of zip files depends on R's zip support, which is wobbly on Windows. 
 
 Though it is listed as a requirement in the DESCRIPTION file, Python is *not* required to use this package. It is only a requirement for a now-deprecated alternative way of loading data, which uses a Python 2 script to convert the RIS file to a CSV, then loads that CSV. If you want to experiment with this, see `convert_ris` and `read_ris_csv`. It might gain you a little speed or memory efficiency, but no promises. I don't recommend this. `read_ris` is what I rely on.
+
+# The usual provisos
+
+I make no guarantees about how well this works. I am literature scholar who programs for reasons that are often unclear even to me. I am a member of the Modern Language Association but neither the MLA nor anyone else is affiliated with this programming project. I am releasing this source code under the permissive MIT license. If you copy or modify this code, please attribute the parts by me to me.
+
+I am happy to hear from anyone who makes use of this, and I'd be grateful to learn of bugs via the [issue tracker](http://github.com/agoldst/mlaibr/issues). I cannot promise to support anyone in using this package.
