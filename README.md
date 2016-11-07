@@ -9,7 +9,7 @@ install.packages("devtools")  # only if not already installed
 devtools::install_github("agoldst/mlaibr")
 ```
 
-This will also require the packages this package depends on. Note that some of these dependencies, like [dplyr](http://cran.r-project.org/web/packages/dplyr/), must normally be built from source and thus require a compiler.
+This will also install the packages this package depends on. Note that some of these dependencies, like [dplyr](http://cran.r-project.org/web/packages/dplyr/), must normally be built from source and thus require a compiler.
 
 # Usage
 
@@ -23,7 +23,7 @@ The result is a "long" data frame, where each row corresponds to a single piece 
 
 In the MLAIB, important supplemental information is contained in the `N1` field, including the bibliography's own record ID numbers ("accession numbers"). See `?N1_field` for help extracting this information.
 
-Finally, I include a couple of some utilities for dealing with MLAIB subject headings, which are found in `KW` fields (many for each record). `strip_subject_relation` is for removing relation terms ("compared to," etc.). `is_author` uses the presence of birth-death dates as a simple heuristic for detecting personal names as subject headings (but works with a data range are misidentified as persons).
+Finally, I include a couple of utilities for dealing with MLAIB subject headings, which are found in `KW` fields (many for each record). `strip_subject_relation` is for removing relation terms ("compared to," etc.). `is_author` uses the presence of birth-death dates as a simple heuristic for detecting personal names as subject headings (but works with a data range are misidentified as persons).
 
 # System requirements
 
