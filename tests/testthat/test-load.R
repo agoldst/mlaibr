@@ -1,3 +1,4 @@
+library(dplyr)
 
 test_data <- c(
 "TY  - JOUR
@@ -30,6 +31,8 @@ test_target <- dplyr::data_frame(
 
 tfile <- tempfile()
 writeLines(test_data, tfile)
+tfile2 <- tempfile()
+writeLines(test_data, tfile2)
 
 test_that("loading RIS data files works", {
     mlaib:::read_ris_file(tfile) %>%
@@ -44,6 +47,23 @@ test_that("loading RIS data files works", {
 
     read_ris(c(tfile, tfile)) %>% 
         expect_equal(double_target, info="Loading multiple files")
+
+    read_ris(c(tfile, tfile2), src_labels=c("a", "b")) %>%
+        expect_equal(double_target %>% bind_rows(
+            data_frame(id=1:4, field="src", value=rep(c("a", "b"), each=2))
+            ) %>% arrange(id),
+                     info="loading with src field")
+
+    con <- file(tfile, "r")
+    read_ris(con) %>%
+        expect_equal(test_target,
+                     info="loading from one connection")
+    close(con)
+    cons <- lapply(c(tfile, tfile2), file, "r")
+    read_ris(cons) %>%
+        expect_equal(double_target,
+                     info="loading from two connections")
+    lapply(cons, close)
 
     restricted_fields <- c("TY", "AU", "T1", "KW")
     read_ris(c(tfile, tfile), fields=restricted_fields) %>% 
@@ -70,6 +90,7 @@ test_that("spreading RIS data works", {
 })
 
         
-if (file.exists(tfile)) {
-    unlink(tfile)
+for (f in c(tfile, tfile2)) {
+    if (file.exists(f))
+        unlink(f)
 }

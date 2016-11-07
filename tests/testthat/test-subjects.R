@@ -44,6 +44,29 @@ writeLines(test_data, tfile)
 b <- read_ris(tfile)
 s <- subjects_frame(b)
 
+test_that("relation term stripping works", { 
+    expect_equal(
+        strip_subject_relation("American literature"),
+        "American literature",
+        info="If no relation terms, should be no-op")
+
+    expect_equal(
+        strip_subject_relation(
+            "sources in James, William (1842-1910)"
+        ), "James, William (1842-1910)",
+        info="Removing one relation term"
+    )
+    expect_equal(
+        strip_subject_relation(
+"compared to Wordsworth, William (1770-1850): 'Intimations of Immortality from Recollections of Early Childhood'"
+        ), "Wordsworth, William (1770-1850)",
+        info="removing relation term and subheading"
+    )
+
+    trouble <- "discusses theories of relationship to realism"
+    expect_equal(strip_subject_relation(trouble), "realism")
+})
+
 test_that("subject frame generation works", {
     expect_equal(colnames(s), c("id", "value"))
     expect_equal(s$id, rep(1L:3L, times=c(13, 7, 10)))
