@@ -1,3 +1,150 @@
+#' Read RIS files into a long-format data frame
+#'
+#' This function loads one or more RIS files into a long data frame. It assigns
+#' unique record ID numbers and optionally filters out unwanted fields. The
+#' result has one line for each record-field combination, including possible
+#' repeats when a record has multiple instances of a field. The result is not
+#' quite "tidy," because no special parsing is done to extract information
+#' within the catch-all \code{N1} field; use \code{\link{N1_field}} for that.
+#' Note also that all fields remain in string format; for example, dates are not
+#' parsed (see \code{\link{Y1_date}}). To project to a data frame with one row
+#' for each bibliographic record, use \code{\link{spread_ris}}.
+#'
+#' @param filenames vector of RIS files to read. Can also be a list of
+#' connections, or a single connection.
+#' @param fields which RIS fields to keep in the result. A default list is set
+#'   by the package option \code{mlaib.ris_keep}. To keep all fields, set
+#'   \code{fields=NULL}.
+#'
+#' @return a data frame with columns \code{id,field,value}
+#'
+#' @seealso \code{\link{spread_ris}}
+#' @export
+#'
+read_ris <- function (filenames, fields=getOption("mlaib.ris_keep"),
+                      src_labels=NULL) {
+    result <- vector("list", length(filenames))
+    base_id <- 0
+
+    # subscripting a single connection will de-class it, so handle this case
+    # specially
+    if (inherits(filenames, "connection")) {
+        filenames <- list(filenames)
+    }
+
+    # construct filter if fields specified
+    if (length(fields) > 0) {
+        if (!is.null(src_labels)) {
+            fields <- c(fields, "src")
+        }
+        flt <- lazyeval::interp(~ field %in% x, x=fields)
+    } else {
+        flt <- ~ TRUE
+    }
+    p <- dplyr::progress_estimated(length(filenames))
+    for (i in seq_along(filenames)) {
+        frm <- read_ris_file(filenames[[i]], src=src_labels[[i]])
+        frm <- dplyr::filter_(frm, flt)
+
+        # adjust ID number
+        frm$id <- frm$id + base_id
+        result[[i]] <- frm
+        base_id <- base_id + tail(frm$id, 1)
+        p$tick()
+    }
+
+
+    dplyr::bind_rows(result)
+}
+
+# Workhorse for reading a single RIS file into a data frame
+read_ris_file <- function (filename, src=NULL) {
+    ll <- readLines(filename, encoding="UTF-8")
+
+    # locate end-of-record lines
+    ers <- stringr::str_detect(ll, "^ER  -")
+
+    # assign sequential record ids
+    result <- data.frame(id=cumsum(ers) + 1, value=ll,
+                         stringsAsFactors=FALSE)
+
+    # drop ER lines
+    result <- result[!ers, ]
+
+    # drop blank lines
+    result <- result[stringr::str_detect(result$value, "\\S"), ]
+
+    # split field key from value
+    sp <- stringr::str_split(result$value, stringr::coll("  -"), n=2)
+    result$field <- vapply(sp, `[[`, "", 1)
+    result$value <- stringr::str_trim(vapply(sp, `[[`, "", 2))
+
+    # rename columns
+    result <- result[ , c("id", "field", "value")]
+
+    if (any(!stringr::str_detect(result$field, "^\\w\\w$"))) {
+        warning(
+"Invalid RIS fields found, probably because of a parsing problem."
+        )
+    }
+    if (any(result$field == "ER")) {
+        warning(
+"Some ER (end-of-record) fields were not eliminated, probably because of a parsing problem."
+        )
+    }
+
+    # Add a source label, if given, as a dummy field "src", one for each
+    # record
+    if (!is.null(src)) {
+        ids <- seq(result[["id"]][nrow(result)])
+        result <- dplyr::bind_rows(
+            dplyr::data_frame_(list(
+                id=~ ids, field= ~ "src", value= ~ src
+            )),
+            result
+        )
+        result <- dplyr::arrange_(result, ~ id)
+    }
+
+    dplyr::tbl_df(result)
+}
+
+#' Convert bibliographic records from long to wide format
+#'
+#' The data frame from \code{\link{read_ris}} has many rows for each
+#' bibliographic record. Many questions relate to bibliographic items as a unit,
+#' in which case it is convenient to have a data frame in the corresponding wide
+#' form. However, note that this is a somewhat non-normalized format since many
+#' RIS fields can repeat within a record. Repeat fields are joined into a single
+#' string value.
+#'
+#' It would be a little more formal to produce list columns from repeating
+#' fields, but that's just a drag. It may make more sense to normalize by hand
+#' by making separate tables of the repeating columns and keying to ID (or
+#' accession number), then spreading out only the single columns of interest
+#' here.
+#'
+#' @param x data frame with \code{id,field,value} columns
+#' @param multi_sep separator string for repeated fields. Should not occur
+#'   within field values.
+#'
+#' @return data frame with one row for each bibliographic item record and one
+#'   column for each field. Missing values are represented with \code{NA}.
+#'
+#' @seealso \code{\link{read_ris}}
+#' @export
+#'
+spread_ris <- function (x, multi_sep=";;") {
+    sm <- lazyeval::interp(~ stringr::str_c(value, collapse=x), x=multi_sep)
+
+    x <- dplyr::summarize_(
+        dplyr::group_by_(x, ~ id, ~ field),
+        value= sm
+    )
+    tidyr::spread_(ungroup(x), "field", "value", fill=NA)
+
+}
+
 #' Read in a CSV file of converted RIS data
 #'
 #' Deprecated. Use \code{\link{read_ris}} unless the speed gain is important.
@@ -65,126 +212,4 @@ read_ris_csv <- function (filename,
 convert_ris <- function (in_file, out_file) {
     scpt <- file.path(path.package("mlaib"), "python", "aggregate.py")
     system2("python", scpt, in_file, stdout=out_file)
-}
-
-
-#' Convert bibliographic records from long to wide format
-#'
-#' The data frame from \code{\link{read_ris}} has many rows for each
-#' bibliographic record. Many questions relate to bibliographic items as a unit,
-#' in which case it is convenient to have a data frame in the corresponding wide
-#' form. However, note that this is a somewhat non-normalized format since many
-#' RIS fields can repeat within a record. Repeat fields are joined into a single
-#' string value.
-#'
-#' It would be a little more formal to produce list columns from repeating
-#' fields, but that's just a drag. It may make more sense to normalize by hand
-#' by making separate tables of the repeating columns and keying to ID (or
-#' accession number), then spreading out only the single columns of interest
-#' here.
-#'
-#' @param x data frame with \code{id,field,value} columns
-#' @param multi_sep separator string for repeated fields. Should not occur
-#'   within field values.
-#'
-#' @return data frame with one row for each bibliographic item record and one
-#'   column for each field. Missing values are represented with \code{NA}.
-#'
-#' @seealso \code{\link{read_ris}}
-#' @export
-#'
-spread_ris <- function (x, multi_sep=";;") {
-    sm <- lazyeval::interp(~ stringr::str_c(value, collapse=x), x=multi_sep)
-
-    x <- dplyr::summarize_(
-        dplyr::group_by_(x, ~ id, ~ field),
-        value= sm
-    )
-    tidyr::spread_(x, "field", "value", fill=NA)
-
-}
-
-#' Read RIS files into a long-format data frame
-#'
-#' This function loads one or more RIS files into a long data frame. It assigns
-#' unique record ID numbers and optionally filters out unwanted fields. The
-#' result has one line for each record-field combination, including possible
-#' repeats when a record has multiple instances of a field. The result is not
-#' quite "tidy," because no special parsing is done to extract information
-#' within the catch-all \code{N1} field; use \code{\link{N1_field}} for that.
-#' Note also that all fields remain in string format; for example, dates are not
-#' parsed (see \code{\link{Y1_date}}). To project to a data frame with one row
-#' for each bibliographic record, use \code{\link{spread_ris}}.
-#'
-#' @param filenames vector of RIS files to read.
-#' @param fields which RIS fields to keep in the result. A default list is set
-#'   by the package option \code{mlaib.ris_keep}. To keep all fields, set
-#'   \code{fields=NULL}.
-#'
-#' @return a data frame with columns \code{id,field,value}
-#'
-#' @seealso \code{\link{spread_ris}}
-#' @export
-#'
-read_ris <- function (filenames, fields=getOption("mlaib.ris_keep")) {
-    result <- vector("list", length(filenames))
-    base_id <- 0
-
-    # construct filter if fields specified
-    if (length(fields) > 0) {
-        flt <- lazyeval::interp(~ field %in% x, x=fields)
-    } else {
-        flt <- ~ TRUE
-    }
-    for (i in seq_along(filenames)) {
-        frm <- read_ris_file(filenames[[i]])
-        frm <- dplyr::filter_(frm, flt)
-
-        # adjust ID number
-        frm$id <- frm$id + base_id
-        result[[i]] <- frm
-        base_id <- base_id + tail(frm$id, 1)
-    }
-
-
-    dplyr::bind_rows(result)
-}
-
-# Workhorse for reading a single RIS file into a data frame
-read_ris_file <- function (filename) {
-    ll <- readLines(filename, encoding="UTF-8")
-
-    # locate end-of-record lines
-    ers <- stringr::str_detect(ll, "^ER  -")
-
-    # assign sequential record ids
-    result <- data.frame(id=cumsum(ers) + 1, value=ll,
-                         stringsAsFactors=FALSE)
-
-    # drop ER lines
-    result <- result[!ers, ]
-
-    # drop blank lines
-    result <- result[stringr::str_detect(result$value, "\\S"), ]
-
-    # split field key from value
-    sp <- stringr::str_split(result$value, stringr::coll("  -"), n=2)
-    result$field <- vapply(sp, `[[`, "", 1)
-    result$value <- stringr::str_trim(vapply(sp, `[[`, "", 2))
-
-    # rename columns
-    result <- result[ , c("id", "field", "value")]
-
-    if (any(!stringr::str_detect(result$field, "^\\w\\w$"))) {
-        warning(
-"Invalid RIS fields found, probably because of a parsing problem."
-        )
-    }
-    if (any(result$field == "ER")) {
-        warning(
-"Some ER (end-of-record) fields were not eliminated, probably because of a parsing problem."
-        )
-    }
-
-    dplyr::tbl_df(result)
 }
