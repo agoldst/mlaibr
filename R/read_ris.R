@@ -7,7 +7,7 @@
 #' quite "tidy," because no special parsing is done to extract information
 #' within the catch-all \code{N1} field; use \code{\link{N1_field}} for that.
 #' Note also that all fields remain in string format; for example, dates are not
-#' parsed (see \code{\link{Y1_date}}). To project to a data frame with one row
+#' parsed (see \code{\link{Y1_year}}). To project to a data frame with one row
 #' for each bibliographic record, use \code{\link{spread_ris}}.
 #'
 #' @param filenames vector of RIS files to read. Can also be a list of
