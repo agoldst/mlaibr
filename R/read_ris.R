@@ -10,8 +10,10 @@
 #' parsed (see \code{\link{Y1_year}}). To project to a data frame with one row
 #' for each bibliographic record, use \code{\link{spread_ris}}.
 #'
-#' @param filenames vector of RIS files to read. Can also be a list of
-#' connections, or a single connection.
+#' @param filenames vector of names of RIS files to read. Can also be a list of
+#' connections, or a single connection. As a convenience, if a name ends in
+#' "\code{.zip}," the file will be assumed to be a zip archive containing a
+#' single RIS file (which is the format supplied in EBSCOhost exports).
 #' @param fields which RIS fields to keep in the result. A default list is set
 #'   by the package option \code{mlaib.ris_keep}. To keep all fields, set
 #'   \code{fields=NULL}.
@@ -43,7 +45,14 @@ read_ris <- function (filenames, fields=getOption("mlaib.ris_keep"),
     }
     p <- dplyr::progress_estimated(length(filenames))
     for (i in seq_along(filenames)) {
-        frm <- read_ris_file(filenames[[i]], src=src_labels[[i]])
+        f <- filenames[[i]]
+
+        close_con <- FALSE
+        if (is.character(f) && grepl("\\.zip$", f)) {
+            f <- unz(f, unzip(f, list=TRUE)[["Name"]])
+            close_con <- TRUE
+        }
+        frm <- read_ris_file(f, src=src_labels[[i]])
         frm <- dplyr::filter_(frm, flt)
 
         # adjust ID number
@@ -51,6 +60,7 @@ read_ris <- function (filenames, fields=getOption("mlaib.ris_keep"),
         result[[i]] <- frm
         base_id <- base_id + tail(frm$id, 1)
         p$tick()
+        if (close_con) close(f)
     }
 
 
@@ -58,8 +68,8 @@ read_ris <- function (filenames, fields=getOption("mlaib.ris_keep"),
 }
 
 # Workhorse for reading a single RIS file into a data frame
-read_ris_file <- function (filename, src=NULL) {
-    ll <- readLines(filename, encoding="UTF-8")
+read_ris_file <- function (f, src=NULL) {
+    ll <- readLines(f, encoding="UTF-8")
 
     # locate end-of-record lines
     ers <- stringr::str_detect(ll, "^ER  -")

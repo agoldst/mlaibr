@@ -7,8 +7,10 @@
 read_ris(filenames, fields = getOption("mlaib.ris_keep"), src_labels = NULL)
 }
 \arguments{
-\item{filenames}{vector of RIS files to read. Can also be a list of
-connections, or a single connection.}
+\item{filenames}{vector of names of RIS files to read. Can also be a list of
+connections, or a single connection. As a convenience, if a name ends in
+"\code{.zip}," the file will be assumed to be a zip archive containing a
+single RIS file (which is the format supplied in EBSCOhost exports).}
 
 \item{fields}{which RIS fields to keep in the result. A default list is set
 by the package option \code{mlaib.ris_keep}. To keep all fields, set

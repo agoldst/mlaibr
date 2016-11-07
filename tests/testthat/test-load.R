@@ -31,8 +31,13 @@ test_target <- dplyr::data_frame(
 
 tfile <- tempfile()
 writeLines(test_data, tfile)
+tfilez <- paste0(tfile, ".zip")
+zip(tfilez, tfile, flags="-r9Xq")
+
 tfile2 <- tempfile()
 writeLines(test_data, tfile2)
+tfile2z <- paste0(tfile2, ".zip")
+zip(tfile2z, tfile2, flags="-r9Xq")
 
 test_that("loading RIS data files works", {
     mlaib:::read_ris_file(tfile) %>%
@@ -73,6 +78,13 @@ test_that("loading RIS data files works", {
                 dplyr::mutate(id=as.numeric(rep(1:4, times=c(3, 5, 3, 5)))),
             info="Load file with field restriction"
         )
+
+    read_ris(tfilez) %>% expect_equal(test_target,
+                                      info="loading from .zip file name")
+
+    read_ris(c(tfilez, tfile2z)) %>%
+        expect_equal(double_target,
+                     info="loading from two .zip file names")
 })
 
 test_that("spreading RIS data works", {
@@ -84,13 +96,12 @@ test_that("spreading RIS data works", {
             AU=c("Hutchison, Percy Adams", "Fletcher, Jefferson B."),
             T1=c("Poetry, Philosophy, and Religion", "Dante's 'Second Love'"),
             JO=c("PMLA", "Modern Philology"),
-            Y1=c("1907", "1915/07"), 
+            Y1=c("1907", "1915/07"),
             KW=c(NA, "Italian literature;;Vita nuova")
         ))
 })
 
-        
-for (f in c(tfile, tfile2)) {
+for (f in c(tfile, tfile2, tfilez, tfile2z)) {
     if (file.exists(f))
         unlink(f)
 }
