@@ -4,7 +4,7 @@
 \alias{strip_subject_relation}
 \title{Remove relational phrases from subject headings}
 \usage{
-strip_subject_relation(x, rels = getOption("mlaib.relations"))
+strip_subject_relation(x, rels = getOption("mlaibr.relations"))
 }
 \arguments{
 \item{x}{character vector of headings}
@@ -13,7 +13,7 @@ strip_subject_relation(x, rels = getOption("mlaib.relations"))
 The anchor \code{^} is added at the start, a space is added to the end of
 each term, and then the vector is collapsed using the alternator \code{|}
 as a separator. One or more occurrences of this big pattern are removed. A
-default list is set as package option \code{mlaib.relations}, but this was
+default list is set as package option \code{mlaibr.relations}, but this was
 found by trial and error and may need modification.}
 }
 \value{

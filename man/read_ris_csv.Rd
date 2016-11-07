@@ -4,7 +4,7 @@
 \alias{read_ris_csv}
 \title{Read in a CSV file of converted RIS data}
 \usage{
-read_ris_csv(filename, columns = getOption("mlaib.ris_keep"))
+read_ris_csv(filename, columns = getOption("mlaibr.ris_keep"))
 }
 \arguments{
 \item{filename}{file to read in, produced from \code{\link{convert_ris}}.}

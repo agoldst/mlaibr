@@ -4,7 +4,7 @@
 \alias{subjects_frame}
 \title{Generate a data frame of the id-subject-heading table}
 \usage{
-subjects_frame(bib, rels = getOption("mlaib.relations"))
+subjects_frame(bib, rels = getOption("mlaibr.relations"))
 }
 \arguments{
 \item{bib}{long-format table of RIS information with \code{id,field,value}

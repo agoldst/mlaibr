@@ -14,7 +14,7 @@
 #'   The anchor \code{^} is added at the start, a space is added to the end of
 #'   each term, and then the vector is collapsed using the alternator \code{|}
 #'   as a separator. One or more occurrences of this big pattern are removed. A
-#'   default list is set as package option \code{mlaib.relations}, but this was
+#'   default list is set as package option \code{mlaibr.relations}, but this was
 #'   found by trial and error and may need modification.
 #'
 #' @return the headings with relation terms removed (hopefully)
@@ -29,7 +29,7 @@
 #' @export
 #'
 strip_subject_relation <- function (x,
-                                    rels=getOption("mlaib.relations")) {
+                                    rels=getOption("mlaibr.relations")) {
     pat <- stringr::str_c(rels, " ")
     pat <- stringr::str_c(pat, collapse="|")
     pat <- stringr::str_c("^(", pat, ")+")
@@ -59,7 +59,7 @@ strip_subject_relation <- function (x,
 #'
 #' @export
 #'
-subjects_frame <- function (bib, rels=getOption("mlaib.relations")) {
+subjects_frame <- function (bib, rels=getOption("mlaibr.relations")) {
     result <- dplyr::filter_(bib, ~ field == "KW")
     result$value <- strip_subject_relation(result$value, rels)
     result <- dplyr::select_(result, ~ id, ~ value)

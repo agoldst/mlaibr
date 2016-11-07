@@ -40,7 +40,7 @@ tfile2z <- paste0(tfile2, ".zip")
 zip(tfile2z, tfile2, flags="-r9Xq")
 
 test_that("loading RIS data files works", {
-    mlaib:::read_ris_file(tfile) %>%
+    mlaibr:::read_ris_file(tfile) %>%
         expect_equal(test_target, info="Loading single file")
 
     read_ris(tfile) %>%

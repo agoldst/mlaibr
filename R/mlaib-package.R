@@ -5,7 +5,7 @@
 #' MLA International Bibliography data or other RIS-formatted bibliographic
 #' data.
 #'
-#' @name mlaib
+#' @name mlaibr
 #' @docType package
 #'
 NULL
@@ -27,11 +27,11 @@ NULL
 .onLoad <- function(libname, pkgname) {
     op_old <- options()
     op <- list(
-        mlaib.ris_keep=c(
+        mlaibr.ris_keep=c(
             "A2", "AU", "JO", "KW", "N1",
             "T1", "T2", "TY", "Y1", "PB"
         ),
-        mlaib.relations=c(
+        mlaibr.relations=c(
             "about", "after", "and", "application of( theories of)?",
             "as", "at", "between", "by", "compared to", "contributions of",
             "discusses", "during",

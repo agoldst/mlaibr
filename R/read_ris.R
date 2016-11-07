@@ -15,7 +15,7 @@
 #' "\code{.zip}," the file will be assumed to be a zip archive containing a
 #' single RIS file (which is the format supplied in EBSCOhost exports).
 #' @param fields which RIS fields to keep in the result. A default list is set
-#'   by the package option \code{mlaib.ris_keep}. To keep all fields, set
+#'   by the package option \code{mlaibr.ris_keep}. To keep all fields, set
 #'   \code{fields=NULL}.
 #'
 #' @return a data frame with columns \code{id,field,value}
@@ -23,7 +23,7 @@
 #' @seealso \code{\link{spread_ris}}
 #' @export
 #'
-read_ris <- function (filenames, fields=getOption("mlaib.ris_keep"),
+read_ris <- function (filenames, fields=getOption("mlaibr.ris_keep"),
                       src_labels=NULL) {
     result <- vector("list", length(filenames))
     base_id <- 0
@@ -170,7 +170,7 @@ spread_ris <- function (x, multi_sep=";;") {
 #'
 #' @export
 read_ris_csv <- function (filename,
-                          columns=getOption("mlaib.ris_keep")) {
+                          columns=getOption("mlaibr.ris_keep")) {
 
     if (length(columns == 0)) {
         # by default, get everything as a string
@@ -220,6 +220,6 @@ read_ris_csv <- function (filename,
 #' @export
 #'
 convert_ris <- function (in_file, out_file) {
-    scpt <- file.path(path.package("mlaib"), "python", "aggregate.py")
+    scpt <- file.path(path.package("mlaibr"), "python", "aggregate.py")
     system2("python", scpt, in_file, stdout=out_file)
 }

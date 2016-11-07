@@ -4,7 +4,8 @@
 \alias{read_ris}
 \title{Read RIS files into a long-format data frame}
 \usage{
-read_ris(filenames, fields = getOption("mlaib.ris_keep"), src_labels = NULL)
+read_ris(filenames, fields = getOption("mlaibr.ris_keep"),
+  src_labels = NULL)
 }
 \arguments{
 \item{filenames}{vector of names of RIS files to read. Can also be a list of
@@ -13,7 +14,7 @@ connections, or a single connection. As a convenience, if a name ends in
 single RIS file (which is the format supplied in EBSCOhost exports).}
 
 \item{fields}{which RIS fields to keep in the result. A default list is set
-by the package option \code{mlaib.ris_keep}. To keep all fields, set
+by the package option \code{mlaibr.ris_keep}. To keep all fields, set
 \code{fields=NULL}.}
 }
 \value{

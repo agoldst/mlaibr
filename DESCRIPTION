@@ -1,4 +1,4 @@
-Package: mlaib
+Package: mlaibr
 Title: Tools for exploring data from the MLA bibliography
 Description: This package provides tools for exploring data from the MLA
     International Bibliography exported to RIS format.
