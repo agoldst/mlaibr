@@ -42,15 +42,15 @@ zip(tfile2z, tfile2, flags="-r9Xq")
 test_that("loading RIS data files works", {
     mlaib:::read_ris_file(tfile) %>%
         expect_equal(test_target, info="Loading single file")
-    
+
     read_ris(tfile) %>%
         expect_equal(test_target,
                      info="Loading single file with read_ris")
-    
+
     double_target <- dplyr::bind_rows(test_target, test_target) %>%
         dplyr::mutate(id=id + rep(c(0,2), each=12))
 
-    read_ris(c(tfile, tfile)) %>% 
+    read_ris(c(tfile, tfile)) %>%
         expect_equal(double_target, info="Loading multiple files")
 
     read_ris(c(tfile, tfile2), src_labels=c("a", "b")) %>%
@@ -71,7 +71,7 @@ test_that("loading RIS data files works", {
     lapply(cons, close)
 
     restricted_fields <- c("TY", "AU", "T1", "KW")
-    read_ris(c(tfile, tfile), fields=restricted_fields) %>% 
+    read_ris(c(tfile, tfile), fields=restricted_fields) %>%
         expect_equal(
             double_target %>%
                 dplyr::filter(field %in% restricted_fields) %>%
