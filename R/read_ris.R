@@ -84,6 +84,14 @@ read_ris_file <- function (f, src=NULL) {
     # drop blank lines
     result <- result[stringr::str_detect(result$value, "\\S"), ]
 
+    # validate
+    valid <- stringr::str_detect(result$value, "^\\w\\w  -")
+    if (any(!valid)) {
+        stop(
+            sum(!valid), " parsing problem(s). First problem line:\n",
+            result$value[!valid][1]
+        )
+    }
     # split field key from value
     sp <- stringr::str_split(result$value, stringr::coll("  -"), n=2)
     result$field <- vapply(sp, `[[`, "", 1)
@@ -92,11 +100,6 @@ read_ris_file <- function (f, src=NULL) {
     # rename columns
     result <- result[ , c("id", "field", "value")]
 
-    if (any(!stringr::str_detect(result$field, "^\\w\\w$"))) {
-        warning(
-"Invalid RIS fields found, probably because of a parsing problem."
-        )
-    }
     if (any(result$field == "ER")) {
         warning(
 "Some ER (end-of-record) fields were not eliminated, probably because of a parsing problem."

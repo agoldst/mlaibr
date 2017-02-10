@@ -87,6 +87,16 @@ test_that("loading RIS data files works", {
                      info="loading from two .zip file names")
 })
 
+test_that("invalid input results in an error", {
+    f <- tempfile()
+    writeLines(c(test_data, "", "TY  - JOUR", "abcdef", "ER  - "), f)
+    expect_error(read_ris(f), "parsing problem")
+    if (file.exists(f)) {
+        unlink(f)
+    }
+})
+
+
 test_that("spreading RIS data works", {
     read_ris(tfile) %>%
         spread_ris() %>%
