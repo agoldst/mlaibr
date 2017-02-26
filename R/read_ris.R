@@ -152,9 +152,9 @@ spread_ris <- function (x, multi_sep=";;") {
 
     x <- dplyr::summarize_(
         dplyr::group_by_(x, ~ id, ~ field),
-        value= sm
+        value=sm
     )
-    tidyr::spread_(ungroup(x), "field", "value", fill=NA)
+    tidyr::spread_(dplyr::ungroup(x), "field", "value", fill=NA)
 
 }
 
