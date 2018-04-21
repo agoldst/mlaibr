@@ -69,57 +69,61 @@ read_ris <- function (filenames, fields=getOption("mlaibr.ris_keep"),
 
 # Workhorse for reading a single RIS file into a data frame
 read_ris_file <- function (f, src=NULL) {
-    ll <- readLines(f, encoding="UTF-8")
+  
+  # This readChar is in anticipation of a new method for ingesting a file
+  # which will account for multi-line entries.
+  # ll <- readChar(f, file.info(f, extra_cols = FALSE)$size)
+  ll <- readLines(f)
 
-    # locate end-of-record lines
-    ers <- stringr::str_detect(ll, "^ER  -")
+  # locate end-of-record lines
+  ers <- stringr::str_detect(ll, "^ER  -")
 
-    # assign sequential record ids
-    result <- data.frame(id=cumsum(ers) + 1, value=ll,
-                         stringsAsFactors=FALSE)
+  # assign sequential record ids
+  result <- data.frame(id=cumsum(ers) + 1, value=ll,
+                       stringsAsFactors=FALSE)
 
-    # drop ER lines
-    result <- result[!ers, ]
+  # drop ER lines
+  result <- result[!ers, ]
 
-    # drop blank lines
-    result <- result[stringr::str_detect(result$value, "\\S"), ]
+  # drop blank lines
+  result <- result[stringr::str_detect(result$value, "\\S"), ]
 
-    # validate
-    valid <- stringr::str_detect(result$value, "^\\w\\w  -")
-    if (any(!valid)) {
-        stop(
-            sum(!valid), " parsing problem(s). First problem line:\n",
-            result$value[!valid][1]
-        )
-    }
-    # split field key from value
-    sp <- stringr::str_split(result$value, stringr::coll("  -"), n=2)
-    result$field <- vapply(sp, `[[`, "", 1)
-    result$value <- stringr::str_trim(vapply(sp, `[[`, "", 2))
+  # validate
+  tags <- stringr::str_detect(result$value, "^[A-Z0-9]{2}  -")
+  if (any(!tags)) {
+      stop(
+          sum(!valid), " parsing problem(s). First problem line:\n",
+          result$value[!valid][1]
+      )
+  }
+  # split field key from value
+  sp <- stringr::str_split(result$value, stringr::coll("  -"), n=2)
+  result$field <- vapply(sp, `[[`, "", 1)
+  result$value <- stringr::str_trim(vapply(sp, `[[`, "", 2))
 
-    # rename columns
-    result <- result[ , c("id", "field", "value")]
+  # rename columns
+  result <- result[ , c("id", "field", "value")]
 
-    if (any(result$field == "ER")) {
-        warning(
+  if (any(result$field == "ER")) {
+      warning(
 "Some ER (end-of-record) fields were not eliminated, probably because of a parsing problem."
-        )
-    }
+      )
+  }
 
-    # Add a source label, if given, as a dummy field "src", one for each
-    # record
-    if (!is.null(src)) {
-        ids <- seq(result[["id"]][nrow(result)])
-        result <- dplyr::bind_rows(
-            dplyr::data_frame_(list(
-                id=~ ids, field= ~ "src", value= ~ src
-            )),
-            result
-        )
-        result <- dplyr::arrange_(result, ~ id)
-    }
+  # Add a source label, if given, as a dummy field "src", one for each
+  # record
+  if (!is.null(src)) {
+      ids <- seq(result[["id"]][nrow(result)])
+      result <- dplyr::bind_rows(
+          dplyr::data_frame_(list(
+              id=~ ids, field= ~ "src", value= ~ src
+          )),
+          result
+      )
+      result <- dplyr::arrange_(result, ~ id)
+  }
 
-    dplyr::tbl_df(result)
+  dplyr::tbl_df(result)
 }
 
 #' Convert bibliographic records from long to wide format

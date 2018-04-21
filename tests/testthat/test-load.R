@@ -1,5 +1,7 @@
 library(dplyr)
 
+context("Loading the file")
+
 test_data <- c(
 "TY  - JOUR
 AU  - Hutchison, Percy Adams
