@@ -74,14 +74,12 @@ read_ris <- function(filenames, fields = getOption("mlaibr.ris_keep"),
 # Workhorse for reading a single RIS file into a data frame
 read_ris_file <- function(f, src = NULL) {
   
-  file_length <- ifelse(
-    inherits(f, "connection"),
-    2^31 - 1, # Max char string length
-    file.info(f, extra_cols = FALSE)$size
-    )
-  
   # Ingest entire file as one long string
-  clob <- readChar(f, file_length)
+  clob <- ifelse(
+    inherits(f, "connection"),
+    paste(readLines(f), collapse = "\r\n"),
+    readChar(f, file.info(f, extra_cols = FALSE)$size)
+  )
   
   # Remove BOM if present
   if (substring(clob, 1, 3) == rawToChar(as.raw(c(0xef, 0xbb, 0xbf)))) {
