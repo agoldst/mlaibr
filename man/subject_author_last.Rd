@@ -15,4 +15,3 @@ character vector of \code{"last"} names
 \description{
 A convenience function for stripping down to an author keyword.
 }
-

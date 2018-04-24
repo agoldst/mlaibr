@@ -34,4 +34,3 @@ strip_subject_relation("compared to Wordsworth, William (1770-1850): 'Intimation
 strip_subject_relation("discusses theories of relationship to realism")
 
 }
-

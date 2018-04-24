@@ -25,4 +25,3 @@ fields and then applying \code{\link{strip_subject_relation}}.
 \seealso{
 \code{\link{subject_authors_frame}}
 }
-

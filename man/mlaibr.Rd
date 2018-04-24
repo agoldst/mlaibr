@@ -10,4 +10,3 @@ This package gives some rudimentary utilities for loading and preprocessing
 MLA International Bibliography data or other RIS-formatted bibliographic
 data.
 }
-
