@@ -82,9 +82,7 @@ read_ris_file <- function(f, src = NULL) {
   )
   
   # Remove BOM if present
-  if (substring(clob, 1, 3) == rawToChar(as.raw(c(0xef, 0xbb, 0xbf)))) {
-    clob <- substring(clob, 4, nchar(clob))
-  }
+  clob <- sub(rawToChar(as.raw(c(0xef, 0xbb, 0xbf))),"", clob)
   
   # Break at tags
   ll <- strsplit(clob,"(\\r\\n|\\n)(?=[A-Z0-9]{2}  \\-)", perl = TRUE)[[1]]
