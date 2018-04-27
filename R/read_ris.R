@@ -197,7 +197,7 @@ read_ris_csv <- function(filename,
         # by default, get everything as a string
         ctypes <- readr::cols(.default = readr::col_character())
     } else {
-        ctypes <- setNames(rep(list("c"), length(keep_cols)), keep_cols)
+        ctypes <- setNames(rep(list("c"), length(columns)), columns)
         ctypes <- do.call(readr::cols_only, ctypes)
     }
     frm <- withCallingHandlers(

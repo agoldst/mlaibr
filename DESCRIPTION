@@ -10,6 +10,9 @@ Depends:
     R (>= 3.2.2)
 Imports:
     stringr,
+    stringi,
+    stats,
+    utils,
     dplyr,
     lazyeval,
     tidyr,
