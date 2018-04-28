@@ -81,11 +81,11 @@ read_ris_file <- function(f, src = NULL) {
     readChar(f, file.info(f, extra_cols = FALSE)$size)
   )
   
-  # Remove BOM if present
-  clob <- sub(rawToChar(as.raw(c(0xef, 0xbb, 0xbf))),"", clob)
-  
   # Break at tags
   ll <- strsplit(clob,"(\\r\\n|\\n)(?=[A-Z0-9]{2}  \\-)", perl = TRUE)[[1]]
+  
+  # Remove BOM if present
+  ll[1] <- sub(rawToChar(as.raw(c(0x5e, 0xef, 0xbb, 0xbf))), "", ll[1])
   
   # locate end-of-record lines
   ers <- stringr::str_detect(ll, "^ER  -")
