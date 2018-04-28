@@ -1,4 +1,6 @@
-library(dplyr)
+suppressPackageStartupMessages(library(dplyr))
+
+context("Loading the file")
 
 test_data <- c(
 "TY  - JOUR
@@ -87,16 +89,6 @@ test_that("loading RIS data files works", {
                      info="loading from two .zip file names")
 })
 
-test_that("invalid input results in an error", {
-    f <- tempfile()
-    writeLines(c(test_data, "", "TY  - JOUR", "abcdef", "ER  - "), f)
-    expect_error(read_ris(f), "parsing problem")
-    if (file.exists(f)) {
-        unlink(f)
-    }
-})
-
-
 test_that("spreading RIS data works", {
     read_ris(tfile) %>%
         spread_ris() %>%
@@ -115,3 +107,14 @@ for (f in c(tfile, tfile2, tfilez, tfile2z)) {
     if (file.exists(f))
         unlink(f)
 }
+
+
+context("Raw EndNote output")
+
+test_that("read_ris() can ingest raw EndNote output", {
+  system.file("extdata", "raw_EndNote_output.ris", package = "mlaibr") %>%
+    read_ris %>%
+    spread_ris %>%
+    nrow %>% 
+    expect_equal(15L)
+})

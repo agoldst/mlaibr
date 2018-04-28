@@ -22,4 +22,3 @@ Convert RIS to CSV using a Python script; the output can be loaded with
 \code{\link{read_ris_csv}}.  Note that this generates a \emph{wide}-format
 rather than long-format data frame.
 }
-

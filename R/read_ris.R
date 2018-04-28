@@ -16,15 +16,19 @@
 #' single RIS file (which is the format supplied in EBSCOhost exports).
 #' @param fields which RIS fields to keep in the result. A default list is set
 #'   by the package option \code{mlaibr.ris_keep}. To keep all fields, set
-#'   \code{fields=NULL}.
+#'   \code{fields = NULL}.
+#' @param src_labels character vector denoting source of entry. If not
+#'   \code{NULL} (default), creates a \code{src} field which will be populated
+#'   by the element index that corresponds to the index of the \code{filenames}
+#'   whence the entry came.
 #'
 #' @return a data frame with columns \code{id,field,value}
 #'
 #' @seealso \code{\link{spread_ris}}
 #' @export
 #'
-read_ris <- function (filenames, fields=getOption("mlaibr.ris_keep"),
-                      src_labels=NULL) {
+read_ris <- function(filenames, fields = getOption("mlaibr.ris_keep"),
+                      src_labels = NULL) {
     result <- vector("list", length(filenames))
     base_id <- 0
 
@@ -39,7 +43,7 @@ read_ris <- function (filenames, fields=getOption("mlaibr.ris_keep"),
         if (!is.null(src_labels)) {
             fields <- c(fields, "src")
         }
-        flt <- lazyeval::interp(~ field %in% x, x=fields)
+        flt <- lazyeval::interp(~ field %in% x, x = fields)
     } else {
         flt <- ~ TRUE
     }
@@ -49,10 +53,10 @@ read_ris <- function (filenames, fields=getOption("mlaibr.ris_keep"),
 
         close_con <- FALSE
         if (is.character(f) && grepl("\\.zip$", f)) {
-            f <- unz(f, unzip(f, list=TRUE)[["Name"]])
+            f <- unz(f, unzip(f, list = TRUE)[["Name"]])
             close_con <- TRUE
         }
-        frm <- read_ris_file(f, src=src_labels[[i]])
+        frm <- read_ris_file(f, src = src_labels[[i]])
         frm <- dplyr::filter_(frm, flt)
 
         # adjust ID number
@@ -68,58 +72,70 @@ read_ris <- function (filenames, fields=getOption("mlaibr.ris_keep"),
 }
 
 # Workhorse for reading a single RIS file into a data frame
-read_ris_file <- function (f, src=NULL) {
-    ll <- readLines(f, encoding="UTF-8")
+read_ris_file <- function(f, src = NULL) {
+  
+  # Ingest entire file as one long string
+  clob <- ifelse(
+    inherits(f, "connection"),
+    paste(readLines(f), collapse = "\r\n"),
+    readChar(f, file.info(f, extra_cols = FALSE)$size)
+  )
+  
+  # Break at tags
+  ll <- strsplit(clob,"(\\r\\n|\\n)(?=[A-Z0-9]{2}  \\-)", perl = TRUE)[[1]]
+  
+  # Remove BOM if present
+  ll[1] <- sub(rawToChar(as.raw(c(0x5e, 0xef, 0xbb, 0xbf))), "", ll[1])
+  
+  # locate end-of-record lines
+  ers <- stringr::str_detect(ll, "^ER  -")
 
-    # locate end-of-record lines
-    ers <- stringr::str_detect(ll, "^ER  -")
+  # assign sequential record ids
+  result <- data.frame(id = cumsum(ers) + 1, value = ll,
+                       stringsAsFactors = FALSE)
 
-    # assign sequential record ids
-    result <- data.frame(id=cumsum(ers) + 1, value=ll,
-                         stringsAsFactors=FALSE)
+  # drop ER lines
+  result <- result[!ers, ]
 
-    # drop ER lines
-    result <- result[!ers, ]
+  # drop blank lines
+  result <- result[stringr::str_detect(result$value, "\\S"), ]
 
-    # drop blank lines
-    result <- result[stringr::str_detect(result$value, "\\S"), ]
+  # validate
+  tags <- stringr::str_detect(result$value, "^[A-Z0-9]{2}  -")
+  if (any(!tags)) {
+      stop(
+          sum(!tags), " parsing problem(s). First problem line:\n",
+          result$value[!tags][1]
+      )
+  }
+  # split field key from value
+  sp <- stringr::str_split(result$value, stringr::coll("  -"), n = 2)
+  result$field <- vapply(sp, `[[`, "", 1)
+  result$value <- stringr::str_trim(vapply(sp, `[[`, "", 2))
 
-    # validate
-    valid <- stringr::str_detect(result$value, "^\\w\\w  -")
-    if (any(!valid)) {
-        stop(
-            sum(!valid), " parsing problem(s). First problem line:\n",
-            result$value[!valid][1]
-        )
-    }
-    # split field key from value
-    sp <- stringr::str_split(result$value, stringr::coll("  -"), n=2)
-    result$field <- vapply(sp, `[[`, "", 1)
-    result$value <- stringr::str_trim(vapply(sp, `[[`, "", 2))
+  # rename columns
+  result <- result[ , c("id", "field", "value")]
 
-    # rename columns
-    result <- result[ , c("id", "field", "value")]
-
-    if (any(result$field == "ER")) {
-        warning(
+  if (any(result$field == "ER")) {
+      warning(
 "Some ER (end-of-record) fields were not eliminated, probably because of a parsing problem."
-        )
-    }
+      )
+  }
 
-    # Add a source label, if given, as a dummy field "src", one for each
-    # record
-    if (!is.null(src)) {
-        ids <- seq(result[["id"]][nrow(result)])
-        result <- dplyr::bind_rows(
-            dplyr::data_frame_(list(
-                id=~ ids, field= ~ "src", value= ~ src
-            )),
-            result
-        )
-        result <- dplyr::arrange_(result, ~ id)
-    }
+  # Add a source label, if given, as a dummy field "src", one for each
+  # record
+  if (!is.null(src)) {
+      ids <- seq(result[["id"]][nrow(result)])
+      result <- dplyr::bind_rows(
+          dplyr::data_frame_(list(
+              id = ~ ids, field = ~ "src", value = ~ src
+          )),
+          result
+      )
+      result <- dplyr::arrange_(result, ~ id)
+  }
 
-    dplyr::tbl_df(result)
+  dplyr::tbl_df(result)
 }
 
 #' Convert bibliographic records from long to wide format
@@ -147,14 +163,14 @@ read_ris_file <- function (f, src=NULL) {
 #' @seealso \code{\link{read_ris}}
 #' @export
 #'
-spread_ris <- function (x, multi_sep=";;") {
-    sm <- lazyeval::interp(~ stringr::str_c(value, collapse=x), x=multi_sep)
+spread_ris <- function(x, multi_sep = ";;") {
+    sm <- lazyeval::interp(~ stringr::str_c(value, collapse = x), x = multi_sep)
 
     x <- dplyr::summarize_(
         dplyr::group_by_(x, ~ id, ~ field),
-        value=sm
+        value = sm
     )
-    tidyr::spread_(dplyr::ungroup(x), "field", "value", fill=NA)
+    tidyr::spread_(dplyr::ungroup(x), "field", "value", fill = NA)
 
 }
 
@@ -172,22 +188,22 @@ spread_ris <- function (x, multi_sep=";;") {
 #'   each field.
 #'
 #' @export
-read_ris_csv <- function (filename,
-                          columns=getOption("mlaibr.ris_keep")) {
+read_ris_csv <- function(filename,
+                          columns = getOption("mlaibr.ris_keep")) {
 
     if (length(columns == 0)) {
         # by default, get everything as a string
-        ctypes <- readr::cols(.default=readr::col_character())
+        ctypes <- readr::cols(.default = readr::col_character())
     } else {
-        ctypes <- setNames(rep(list("c"), length(keep_cols)), keep_cols)
+        ctypes <- setNames(rep(list("c"), length(columns)), columns)
         ctypes <- do.call(readr::cols_only, ctypes)
     }
     frm <- withCallingHandlers(
-        readr::read_delim(filename, delim=",", quote="\"", escape_double=TRUE,
-            col_names=TRUE,
-            col_types=ctypes
+        readr::read_delim(filename, delim = ",", quote = "\"", escape_double = TRUE,
+            col_names = TRUE,
+            col_types = ctypes
         ),
-        warning=function (w) {
+        warning = function(w) {
             if (stringr::str_detect(w$message,
                 "^The following named parsers don't match the column names")) {
                 invokeRestart("muffleWarning")
@@ -222,7 +238,7 @@ read_ris_csv <- function (filename,
 #' @return return value from \code{\link[base]{system2}}.
 #' @export
 #'
-convert_ris <- function (in_file, out_file) {
+convert_ris <- function(in_file, out_file) {
     scpt <- file.path(path.package("mlaibr"), "python", "aggregate.py")
-    system2("python", scpt, in_file, stdout=out_file)
+    system2("python", scpt, in_file, stdout = out_file)
 }

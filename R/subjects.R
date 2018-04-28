@@ -55,7 +55,6 @@ strip_subject_relation <- function (x,
 #'
 #' @return data frame with \code{id,value} columns
 #'
-#' @seealso \code{\link{subject_authors_frame}}
 #'
 #' @export
 #'

@@ -22,7 +22,3 @@ can be filtered and then joined back onto a table of bibliographic items.
 This function is just a convenience wrapper for filtering only \code{KW}
 fields and then applying \code{\link{strip_subject_relation}}.
 }
-\seealso{
-\code{\link{subject_authors_frame}}
-}
-

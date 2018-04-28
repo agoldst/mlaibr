@@ -7,6 +7,8 @@
 #'
 #' @name mlaibr
 #' @docType package
+#' @importFrom stats setNames
+#' @importFrom utils tail unzip
 #'
 NULL
 

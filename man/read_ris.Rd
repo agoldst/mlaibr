@@ -15,7 +15,12 @@ single RIS file (which is the format supplied in EBSCOhost exports).}
 
 \item{fields}{which RIS fields to keep in the result. A default list is set
 by the package option \code{mlaibr.ris_keep}. To keep all fields, set
-\code{fields=NULL}.}
+\code{fields = NULL}.}
+
+\item{src_labels}{character vector denoting source of entry. If not
+\code{NULL} (default), creates a \code{src} field which will be populated
+by the element index that corresponds to the index of the \code{filenames}
+whence the entry came.}
 }
 \value{
 a data frame with columns \code{id,field,value}
@@ -34,4 +39,3 @@ for each bibliographic record, use \code{\link{spread_ris}}.
 \seealso{
 \code{\link{spread_ris}}
 }
-
