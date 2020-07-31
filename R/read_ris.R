@@ -21,6 +21,7 @@
 #'   \code{NULL} (default), creates a \code{src} field which will be populated
 #'   by the element index that corresponds to the index of the \code{filenames}
 #'   whence the entry came.
+#' @param quietly logical denoting whether to show a progress bar.
 #'
 #' @return a data frame with columns \code{id,field,value}
 #'
@@ -28,7 +29,7 @@
 #' @export
 #'
 read_ris <- function(filenames, fields = getOption("mlaibr.ris_keep"),
-                      src_labels = NULL) {
+                      src_labels = NULL, quietly = FALSE) {
     result <- vector("list", length(filenames))
     base_id <- 0
 
@@ -43,11 +44,12 @@ read_ris <- function(filenames, fields = getOption("mlaibr.ris_keep"),
         if (!is.null(src_labels)) {
             fields <- c(fields, "src")
         }
-        flt <- lazyeval::interp(~ field %in% x, x = fields)
+        use_filter <- TRUE
     } else {
-        flt <- ~ TRUE
+        use_filter <- FALSE
     }
-    p <- dplyr::progress_estimated(length(filenames))
+    if (!quietly)
+      p <- progress::progress_bar$new(total = length(filenames))
     for (i in seq_along(filenames)) {
         f <- filenames[[i]]
 
@@ -57,14 +59,17 @@ read_ris <- function(filenames, fields = getOption("mlaibr.ris_keep"),
             close_con <- TRUE
         }
         frm <- read_ris_file(f, src = src_labels[[i]])
-        frm <- dplyr::filter_(frm, flt)
+        if (use_filter)
+          frm <- frm[frm$field %in% fields, ]
 
         # adjust ID number
         frm$id <- frm$id + base_id
         result[[i]] <- frm
         base_id <- base_id + tail(frm$id, 1)
-        p$tick()
-        if (close_con) close(f)
+        if (!quietly)
+          p$tick()
+        if (close_con)
+          close(f)
     }
 
 
@@ -91,8 +96,7 @@ read_ris_file <- function(f, src = NULL) {
   ers <- stringr::str_detect(ll, "^ER  -")
 
   # assign sequential record ids
-  result <- data.frame(id = cumsum(ers) + 1, value = ll,
-                       stringsAsFactors = FALSE)
+  result <- tibble::tibble(id = cumsum(ers) + 1, value = ll)
 
   # drop ER lines
   result <- result[!ers, ]
@@ -127,15 +131,13 @@ read_ris_file <- function(f, src = NULL) {
   if (!is.null(src)) {
       ids <- seq(result[["id"]][nrow(result)])
       result <- dplyr::bind_rows(
-          dplyr::data_frame_(list(
-              id = ~ ids, field = ~ "src", value = ~ src
-          )),
+        tibble::tibble(id = ids, field = "src", value = src),
           result
       )
-      result <- dplyr::arrange_(result, ~ id)
+      result <- dplyr::arrange(result, id, field)
   }
 
-  dplyr::tbl_df(result)
+  result
 }
 
 #' Convert bibliographic records from long to wide format
@@ -164,14 +166,11 @@ read_ris_file <- function(f, src = NULL) {
 #' @export
 #'
 spread_ris <- function(x, multi_sep = ";;") {
-    sm <- lazyeval::interp(~ stringr::str_c(value, collapse = x), x = multi_sep)
-
-    x <- dplyr::summarize_(
-        dplyr::group_by_(x, ~ id, ~ field),
-        value = sm
-    )
-    tidyr::spread_(dplyr::ungroup(x), "field", "value", fill = NA)
-
+  x %>% 
+    dplyr::group_by(id, field) %>% 
+    dplyr::summarize(value = stringr::str_c(value, collapse = multi_sep)) %>% 
+    dplyr::ungroup() %>% 
+    tidyr::spread("field", "value", fill = NA)
 }
 
 #' Read in a CSV file of converted RIS data
@@ -189,7 +188,7 @@ spread_ris <- function(x, multi_sep = ";;") {
 #'
 #' @export
 read_ris_csv <- function(filename,
-                          columns = getOption("mlaibr.ris_keep")) {
+                         columns = getOption("mlaibr.ris_keep")) {
 
     if (length(columns == 0)) {
         # by default, get everything as a string
@@ -216,7 +215,7 @@ read_ris_csv <- function(filename,
     if (length(columns) > 0) {
         missing_cols <- setdiff(columns, colnames(frm))
         if (length(missing_cols) > 0) {
-            frm[ , missing_cols] <- ""
+            frm[ ,missing_cols] <- ""
         }
     }
     frm

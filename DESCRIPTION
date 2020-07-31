@@ -2,26 +2,27 @@ Package: mlaibr
 Title: Tools for exploring data from the MLA bibliography
 Description: This package provides tools for exploring data from the MLA
     International Bibliography exported to RIS format.
-Version: 0.1
+Version: 0.2
 Authors@R: c(
     person("Andrew", "Goldstone", email = "andrew.goldstone@gmail.com", role = c("aut", "cre")),
     person("Paul", "Egeler", email = "paulegeler@gmail.com", role = "ctb"))
 Depends:
     R (>= 3.2.2)
 Imports:
-    stringr,
-    stringi,
-    stats,
-    utils,
     dplyr,
     lazyeval,
-    tidyr,
     lubridate,
+    magrittr,
+    progress,
     readr,
-    magrittr
+    stats,
+    stringi,
+    stringr,
+    tibble,
+    tidyr,
+    utils
 Suggests:
     testthat
-SystemRequirements: python
 License: MIT
 LazyData: true
 RoxygenNote: 6.0.1

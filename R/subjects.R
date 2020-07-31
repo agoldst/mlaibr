@@ -1,5 +1,3 @@
-
-
 #' Remove relational phrases from subject headings
 #'
 #' Many subject headings specify a relation to a term: not just "Joyce, James"
