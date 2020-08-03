@@ -2,7 +2,7 @@ suppressPackageStartupMessages(library(dplyr))
 
 context("Loading the file")
 
-test_data <- c(
+test_data <-
 "TY  - JOUR
 AU  - Hutchison, Percy Adams
 T1  - Poetry, Philosophy, and Religion
@@ -18,9 +18,9 @@ Y1  - 1915/07
 KW  - Italian literature
 KW  - Vita nuova
 ER  - 
-")
+"
 
-test_target <- dplyr::data_frame(
+test_target <- tibble::tibble(
     id=as.numeric(rep(1:2, times=c(5, 7))),
     field=c("TY", "AU", "T1", "JO", "Y1", "TY", "AU",
             "T1", "JO", "Y1", "KW", "KW"),
@@ -57,7 +57,7 @@ test_that("loading RIS data files works", {
 
     read_ris(c(tfile, tfile2), src_labels=c("a", "b")) %>%
         expect_equal(double_target %>% bind_rows(
-            data_frame(id=1:4, field="src", value=rep(c("a", "b"), each=2))
+            tibble::tibble(id=1:4, field="src", value=rep(c("a", "b"), each=2))
             ) %>% arrange(id),
                      info="loading with src field")
 
@@ -91,16 +91,18 @@ test_that("loading RIS data files works", {
 
 test_that("spreading RIS data works", {
     read_ris(tfile) %>%
-        spread_ris() %>%
-        expect_equal(dplyr::data_frame(
+        spread_ris %>%
+        expect_equal(
+          tibble::tibble(
             id=as.numeric(1:2),
-            TY=rep("JOUR", 2),
             AU=c("Hutchison, Percy Adams", "Fletcher, Jefferson B."),
-            T1=c("Poetry, Philosophy, and Religion", "Dante's 'Second Love'"),
             JO=c("PMLA", "Modern Philology"),
-            Y1=c("1907", "1915/07"),
-            KW=c(NA, "Italian literature;;Vita nuova")
-        ))
+            KW=c(NA, "Italian literature;;Vita nuova"),
+            T1=c("Poetry, Philosophy, and Religion", "Dante's 'Second Love'"),
+            TY=rep("JOUR", 2),
+            Y1=c("1907", "1915/07")
+          )
+        )
 })
 
 for (f in c(tfile, tfile2, tfilez, tfile2z)) {
@@ -115,6 +117,6 @@ test_that("read_ris() can ingest raw EndNote output", {
   system.file("extdata", "raw_EndNote_output.ris", package = "mlaibr") %>%
     read_ris %>%
     spread_ris %>%
-    nrow %>% 
+    nrow %>%
     expect_equal(15L)
 })

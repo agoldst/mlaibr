@@ -9,7 +9,7 @@
 #' @docType package
 #' @importFrom stats setNames
 #' @importFrom utils tail unzip
-#'
+#' @importFrom rlang .data
 NULL
 
 
@@ -51,5 +51,3 @@ NULL
 
   invisible()
 }
-
-

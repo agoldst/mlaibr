@@ -25,7 +25,6 @@
 #' strip_subject_relation("discusses theories of relationship to realism")
 #'
 #' @export
-#'
 strip_subject_relation <- function (x,
                                     rels=getOption("mlaibr.relations")) {
     pat <- stringr::str_c(rels, " ")
@@ -53,15 +52,13 @@ strip_subject_relation <- function (x,
 #'
 #' @return data frame with \code{id,value} columns
 #'
-#'
 #' @export
-#'
-subjects_frame <- function (bib, rels=getOption("mlaibr.relations")) {
-    result <- dplyr::filter_(bib, ~ field == "KW")
-    result$value <- strip_subject_relation(result$value, rels)
-    result <- dplyr::select_(result, ~ id, ~ value)
-    result <- dplyr::distinct_(result, ~ id, ~ value)
-    result
+subjects_frame <- function(bib, rels=getOption("mlaibr.relations")) {
+  bib %>%
+    dplyr::filter(.data$field == "KW") %>%
+    dplyr::mutate(value = strip_subject_relation(.data$value, rels)) %>%
+    dplyr::select(.data$id, .data$value) %>%
+    dplyr::distinct(.data$id, .data$value)
 }
 
 #' Detect author names among subject headings
@@ -90,7 +87,7 @@ subjects_frame <- function (bib, rels=getOption("mlaibr.relations")) {
 #'
 #' @export
 #'
-is_author <- function (x) {
+is_author <- function(x) {
     # find authors by looking for subjects that have a birthdate
     # indication (YYYY- or (YYY-) or (ca. YYYY-) etc. MLAIB uses
     # no-break spaces after ca. and fl. This is not perfect, because
@@ -122,7 +119,7 @@ is_author <- function (x) {
 #'
 #' @export
 #'
-subject_author <- function (x) {
+subject_author <- function(x) {
     # date ranges can include numbers, dashes, spaces, no-break spaces,
     # and "ca." and "fl."
     stringr::str_trim(
@@ -139,8 +136,7 @@ subject_author <- function (x) {
 #' @return character vector of \code{"last"} names
 #'
 #' @export
-#'
-subject_author_last <- function (x) {
+subject_author_last <- function(x) {
     result <- stringr::str_replace(x, ",.*$", "")
     stringi::stri_trans_tolower(result)
 }

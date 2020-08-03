@@ -3,7 +3,6 @@
 \docType{package}
 \name{mlaibr}
 \alias{mlaibr}
-\alias{mlaibr-package}
 \title{Explore MLA bibliography data}
 \description{
 This package gives some rudimentary utilities for loading and preprocessing

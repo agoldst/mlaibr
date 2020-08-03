@@ -72,26 +72,25 @@ read_ris <- function(filenames, fields = getOption("mlaibr.ris_keep"),
           close(f)
     }
 
-
     dplyr::bind_rows(result)
 }
 
 # Workhorse for reading a single RIS file into a data frame
 read_ris_file <- function(f, src = NULL) {
-  
+
   # Ingest entire file as one long string
   clob <- ifelse(
     inherits(f, "connection"),
     paste(readLines(f), collapse = "\r\n"),
     readChar(f, file.info(f, extra_cols = FALSE)$size)
   )
-  
+
   # Break at tags
   ll <- strsplit(clob,"(\\r\\n|\\n)(?=[A-Z0-9]{2}  \\-)", perl = TRUE)[[1]]
-  
+
   # Remove BOM if present
   ll[1] <- sub(rawToChar(as.raw(c(0x5e, 0xef, 0xbb, 0xbf))), "", ll[1])
-  
+
   # locate end-of-record lines
   ers <- stringr::str_detect(ll, "^ER  -")
 
@@ -130,11 +129,12 @@ read_ris_file <- function(f, src = NULL) {
   # record
   if (!is.null(src)) {
       ids <- seq(result[["id"]][nrow(result)])
-      result <- dplyr::bind_rows(
-        tibble::tibble(id = ids, field = "src", value = src),
-          result
-      )
-      result <- dplyr::arrange(result, id, field)
+      result <-
+        dplyr::bind_rows(
+          result,
+          tibble::tibble(id = ids, field = "src", value = src)
+        ) %>%
+        dplyr::arrange(.data$id)
   }
 
   result
@@ -166,10 +166,10 @@ read_ris_file <- function(f, src = NULL) {
 #' @export
 #'
 spread_ris <- function(x, multi_sep = ";;") {
-  x %>% 
-    dplyr::group_by(id, field) %>% 
-    dplyr::summarize(value = stringr::str_c(value, collapse = multi_sep)) %>% 
-    dplyr::ungroup() %>% 
+  x %>%
+    dplyr::group_by(.data$id, .data$field) %>%
+    dplyr::summarize(value = stringr::str_c(.data$value, collapse = multi_sep)) %>%
+    dplyr::ungroup() %>%
     tidyr::spread("field", "value", fill = NA)
 }
 

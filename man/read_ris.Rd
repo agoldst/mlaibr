@@ -4,8 +4,12 @@
 \alias{read_ris}
 \title{Read RIS files into a long-format data frame}
 \usage{
-read_ris(filenames, fields = getOption("mlaibr.ris_keep"),
-  src_labels = NULL)
+read_ris(
+  filenames,
+  fields = getOption("mlaibr.ris_keep"),
+  src_labels = NULL,
+  quietly = FALSE
+)
 }
 \arguments{
 \item{filenames}{vector of names of RIS files to read. Can also be a list of
@@ -21,6 +25,8 @@ by the package option \code{mlaibr.ris_keep}. To keep all fields, set
 \code{NULL} (default), creates a \code{src} field which will be populated
 by the element index that corresponds to the index of the \code{filenames}
 whence the entry came.}
+
+\item{quietly}{logical denoting whether to show a progress bar.}
 }
 \value{
 a data frame with columns \code{id,field,value}
