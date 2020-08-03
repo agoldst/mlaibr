@@ -21,4 +21,3 @@ Read in the result of \code{\link{convert_ris}}. Note that this function
 returns a \emph{wide}-format rather than long-format data frame and does not
 add any ID column.
 }
-

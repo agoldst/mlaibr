@@ -29,4 +29,3 @@ subject_author("Joyce, James (1882-1941)")
 \seealso{
 \code{\link{subjects_frame}}, \code{\link{is_author}}
 }
-
