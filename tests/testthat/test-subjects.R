@@ -1,3 +1,5 @@
+context("Subjects")
+
 test_data <- c(
 "T1  - Shelley's On Life
 KW  - English literature
@@ -93,10 +95,10 @@ test_that("author detection works", {
 })
 
 test_that("subject author extraction works", {
-    sa <- s %>%
-        dplyr::filter(is_author(value)) %>%
+    sa <- s |>
+        dplyr::filter(is_author(value)) |>
         dplyr::mutate(value=subject_author(value))
-    expect_equal(sa, dplyr::data_frame(
+    expect_equal(sa, tibble::tibble(
         id=as.numeric(rep(1:3, times=c(3, 1, 4))),
         value=c(
             "Shelley, Percy Bysshe",
@@ -112,8 +114,8 @@ test_that("subject author extraction works", {
 })
 
 test_that("last names are extracted correctly", {
-    sa <- s %>%
-        dplyr::filter(is_author(value)) %>%
+    sa <- s |>
+        dplyr::filter(is_author(value)) |>
         dplyr::mutate(value=subject_author(value))
     expect_equal(subject_author_last(sa$value),
         c("shelley", "wordsworth", "drummond", "thoreau", "stein",

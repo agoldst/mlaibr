@@ -1,4 +1,4 @@
 library(testthat)
-library(mlaib)
+library(mlaibr)
 
-test_check("mlaib")
+test_check("mlaibr")

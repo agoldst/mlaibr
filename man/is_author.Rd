@@ -34,4 +34,3 @@ is_author("A la recherche du temps perdu (1913-1929)")
 \seealso{
 \code{\link{subjects_frame}}, \code{\link{subject_author}}
 }
-

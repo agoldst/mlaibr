@@ -1,3 +1,5 @@
+context("Parsing the data")
+
 test_data <- c(
 "TY  - JOUR
 AU  - Hutchison, Percy Adams
@@ -39,7 +41,7 @@ ER  -
 
 tfile <- tempfile()
 writeLines(test_data, tfile)
-b <- read_ris(tfile) %>% spread_ris()
+b <- read_ris(tfile) |> spread_ris()
 
 test_that("N1_field works", {
     expect_equal(N1_field(b$N1, "Accession Number"),

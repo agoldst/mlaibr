@@ -1,0 +1,773 @@
+﻿TY  - JOUR
+AB  - Gram-negative bacteria utilize glutathione (GSH) as their major LMW thiol. However, most Gram-positive bacteria do not encode enzymes for GSH biosynthesis and produce instead alternative LMW thiols, such as bacillithiol (BSH) and mycothiol (MSH). BSH is utilized by Firmicutes and MSH is the major LMW thiol of Actinomycetes. LMW thiols are required to maintain the reduced state of the cytoplasm, but are also involved in virulence mechanisms in human pathogens, such as Staphylococcus aureus, Mycobacterium tuberculosis, Streptococcus pneumoniae, Salmonella enterica subsp. Typhimurium and Listeria monocytogenes. Infection conditions often cause perturbations of the intrabacterial redox balance in pathogens, which is further affected under antibiotics treatments. During the last years, novel glutaredoxin-fused roGFP2 biosensors have been engineered in many eukaryotic organisms, including parasites, yeast, plants and human cells for dynamic live-imaging of the GSH redox potential in different compartments. Likewise bacterial roGFP2-based biosensors are now available to measure the dynamic changes in the GSH, BSH and MSH redox potentials in model and pathogenic Gram-negative and Gram-positive bacteria. In this review, we present an overview of novel functions of the bacterial LMW thiols GSH, MSH and BSH in pathogenic bacteria in virulence regulation. Moreover, recent results about the application of genetically encoded redox biosensors are summarized to study the mechanisms of host-pathogen interactions, persistence and antibiotics resistance. In particularly, we highlight recent biosensor results on the redox changes in the intracellular food-borne pathogen Salmonella Typhimurium as well as in the Gram-positive pathogens S. aureus and M. tuberculosis during infection conditions and under antibiotics treatments. These studies established a link between ROS and antibiotics resistance with the intracellular LMW thiol-redox potential. Future applications should be directed to compare the redox potentials among different clinical isolates of these pathogens in relation to their antibiotics resistance and to screen for new ROS-producing drugs as promising strategy to combat antimicrobial resistance.
+AD  - Freie Universitat Berlin, Institute for Biology-Microbiology, Konigin-Luise-Strasse 12-16, D-14195 Berlin, Germany.
+Freie Universitat Berlin, Institute for Biology-Microbiology, Konigin-Luise-Strasse 12-16, D-14195 Berlin, Germany. Electronic address: haike.antelmann@fu-berlin.de.
+AN  - 29454879
+AU  - Tung, Q. N.
+AU  - Linzner, N.
+AU  - Loi, V. V.
+AU  - Antelmann, H.
+DA  - Feb 15
+DO  - 10.1016/j.freeradbiomed.2018.02.018
+DP  - NLM
+ET  - 2018/02/20
+J2  - Free radical biology & medicine
+KW  - Bacillithiol
+Glutathione
+Listeria monocytogenes
+Mycobacterium tuberculosis
+Mycothiol
+Salmonella Typhimurium
+Staphylococcus aureus
+roGFP2/redox biosensors
+LA  - eng
+N1  - 1873-4596
+Tung, Quach Ngoc
+Linzner, Nico
+Loi, Vu Van
+Antelmann, Haike
+Journal Article
+Review
+United States
+Free Radic Biol Med. 2018 Feb 15. pii: S0891-5849(18)30073-X. doi: 10.1016/j.freeradbiomed.2018.02.018.
+PY  - 2018
+SN  - 0891-5849
+ST  - Application of genetically encoded redox biosensors to measure dynamic changes in the glutathione, bacillithiol and mycothiol redox potentials in pathogenic bacteria
+T2  - Free Radic Biol Med
+TI  - Application of genetically encoded redox biosensors to measure dynamic changes in the glutathione, bacillithiol and mycothiol redox potentials in pathogenic bacteria
+ID  - 1
+ER  - 
+
+
+TY  - JOUR
+AB  - Bacillithiol is a low molecular weight thiol found in Firmicutes that is analogous to glutathione, which is absent in these bacteria. Bacillithiol transferases catalyze the transfer of bacillithiol to various substrates. The S-transferase-like (STL) superfamily contains over 30,000 putative members, including bacillithiol transferases. Proteins in this family are extremely divergent and are related by structural rather than sequence similarity, leaving it unclear if all share the same biochemical activity. Bacillus subtilis encodes eight predicted STL superfamily members, only one of which has been shown to be a bacillithiol transferase. Here we find that the seven remaining proteins show varying levels of metal dependent bacillithiol transferase activity. We have renamed the eight enzymes BstA-H. Mass spectrometry and gene expression studies revealed that all of the enzymes are produced to varying levels during growth and sporulation, with BstB and BstE being the most abundant and BstF and BstH being the least abundant. Interestingly, several bacillithiol transferases are induced in the mother cell during sporulation. A strain lacking all eight bacillithiol transferases showed normal growth in the presence of stressors that adversely affect growth of bacillithiol-deficient strains, such as paraquat and CdCl2. Thus, the STL bacillithiol transferases represent a new group of proteins that play currently unknown, but potentially significant roles in bacillithiol-dependent reactions. We conclude that these enzymes are highly divergent, perhaps to cope with an equally diverse array of endogenous or exogenous toxic metabolites and oxidants.
+AD  - Division of Biological Sciences, University of California, San Diego, La Jolla, CA, United States of America.
+Department of Pharmacology and Pharmacy, School of Medicine, University of California, San Diego, La Jolla, CA, United States of America.
+AN  - 29451913
+AU  - Perera, V. R.
+AU  - Lapek, J. D., Jr.
+AU  - Newton, G. L.
+AU  - Gonzalez, D. J.
+AU  - Pogliano, K.
+C2  - PMC5815605
+DO  - 10.1371/journal.pone.0192977
+DP  - NLM
+ET  - 2018/02/17
+IS  - 2
+J2  - PloS one
+LA  - eng
+N1  - 1932-6203
+Perera, Varahenage R
+Lapek, John D Jr.
+Newton, Gerald L
+Gonzalez, David J
+Pogliano, Kit
+AI113295 /NH/NIH HHS/United States
+Journal Article
+Research Support, N.I.H., Extramural
+United States
+PLoS One. 2018 Feb 16;13(2):e0192977. doi: 10.1371/journal.pone.0192977. eCollection 2018.
+PY  - 2018
+SN  - 1932-6203
+SP  - e0192977
+ST  - Identification of the S-transferase like superfamily bacillithiol transferases encoded by Bacillus subtilis
+T2  - PLoS One
+TI  - Identification of the S-transferase like superfamily bacillithiol transferases encoded by Bacillus subtilis
+VL  - 13
+ID  - 2
+ER  - 
+
+
+TY  - JOUR
+AB  - Staphylococcus aureus produces bacillithiol (BSH) as major low molecular weight (LMW) thiol which functions in thiol-protection and redox-regulation by protein S-bacillithiolation under hypochlorite stress. The aldehyde dehydrogenase AldA was identified as S-bacillithiolated at its active site Cys279 under NaOCl stress in S. aureus. Here, we have studied the expression, function, redox regulation and structural changes of AldA of S. aureus. Transcription of aldA was previously shown to be regulated by the alternative sigma factor SigmaB. Northern blot analysis revealed SigmaB-independent induction of aldA transcription under formaldehyde, methylglyoxal, diamide and NaOCl stress. Deletion of aldA resulted in a NaOCl-sensitive phenotype in survival assays, suggesting an important role of AldA in the NaOCl stress defense. Purified AldA showed broad substrate specificity for oxidation of several aldehydes, including formaldehyde, methylglyoxal, acetaldehyde and glycol aldehyde. Thus, AldA could be involved in detoxification of aldehyde substrates that are elevated under NaOCl stress. Kinetic activity assays revealed that AldA is irreversibly inhibited under H2O2 treatment in vitro due to overoxidation of Cys279 in the absence of BSH. Pre-treatment of AldA with BSH prior to H2O2 exposure resulted in reversible AldA inactivation due to S-bacillithiolation as revealed by activity assays and BSH-specific Western blot analysis. Using molecular docking and molecular dynamic simulation, we further show that BSH occupies two different positions in the AldA active site depending on the AldA activation state. In conclusion, we show here that AldA is an important target for S-bacillithiolation in S. aureus that is up-regulated under NaOCl stress and functions in protection under hypochlorite stress.
+AD  - Freie Universitat Berlin, Institute for Biology-Microbiology, Konigin-Luise-Strasse 12-16, D-14195 Berlin, Germany.
+School of Chemistry, Bedson Building, Newcastle University, NE1 7RU Newcastle upon Tyne, UK.
+Freie Universitat Berlin, Laboratory of Structural Biochemistry, D-14195 Berlin, Germany; Institute of Technical Biochemistry, Faculty of Biotechnology and Food Sciences, Lodz University of Technology, Lodz 90-924, Poland.
+School of Pharmacy, University of East Anglia, Norwich Research Park, Norwich NR4 7TJ, UK.
+Freie Universitat Berlin, Laboratory of Structural Biochemistry, D-14195 Berlin, Germany; Helmholtz-Zentrum Berlin fur Materialien und Energie, Macromolecular Crystallography, D-12489 Berlin, Germany.
+Freie Universitat Berlin, Institute for Biology-Microbiology, Konigin-Luise-Strasse 12-16, D-14195 Berlin, Germany. Electronic address: haike.antelmann@fu-berlin.de.
+AN  - 29433022
+AU  - Imber, M.
+AU  - Loi, V. V.
+AU  - Reznikov, S.
+AU  - Fritsch, V. N.
+AU  - Pietrzyk-Brzezinska, A. J.
+AU  - Prehn, J.
+AU  - Hamilton, C.
+AU  - Wahl, M. C.
+AU  - Bronowska, A. K.
+AU  - Antelmann, H.
+DA  - May
+DO  - 10.1016/j.redox.2018.02.001
+DP  - NLM
+ET  - 2018/02/13
+J2  - Redox biology
+KW  - AldA
+Bacillithiol
+Hypochlorite stress
+MD simulations
+Staphylococcus aureus
+LA  - eng
+N1  - 2213-2317
+Imber, Marcel
+Loi, Vu Van
+Reznikov, Sylvia
+Fritsch, Verena Nadin
+Pietrzyk-Brzezinska, Agnieszka J
+Prehn, Janek
+Hamilton, Chris
+Wahl, Markus C
+Bronowska, Agnieszka K
+Antelmann, Haike
+Journal Article
+Netherlands
+Redox Biol. 2018 May;15:557-568. doi: 10.1016/j.redox.2018.02.001. Epub 2018 Feb 5.
+PY  - 2018
+SN  - 2213-2317
+SP  - 557-568
+ST  - The aldehyde dehydrogenase AldA contributes to the hypochlorite defense and is redox-controlled by protein S-bacillithiolation in Staphylococcus aureus
+T2  - Redox Biol
+TI  - The aldehyde dehydrogenase AldA contributes to the hypochlorite defense and is redox-controlled by protein S-bacillithiolation in Staphylococcus aureus
+VL  - 15
+ID  - 3
+ER  - 
+
+
+TY  - JOUR
+AB  - Bacillithiol is a low-molecular weight thiol produced by many gram-positive organisms, including Staphylococcus aureus and Bacillus anthracis. It is the major thiol responsible for maintaining redox homeostasis and cellular detoxification, including inactivation of the antibiotic fosfomycin. The metal-dependent bacillithiol transferase BstA is likely involved in these sorts of detoxification processes, but the exact substrates and enzyme mechanism have not been identified. Here we report the 1.34 A resolution X-ray crystallographic structure of BstA from S. aureus. Our structure confirms that BstA belongs to the YfiT-like metal-dependent hydrolase superfamily. Like YfiT, our structure contains nickel within its active site, but our functional data suggest that BstA utilizes zinc for activity. Although BstA and YfiT both contain a core four helix bundle and coordinate their metal ions in the same fashion, significant differences between the protein structures are described here.
+AD  - Department of Chemistry, Grand Valley State University, Allendale, Michigan, 49401.
+AN  - 29417696
+AU  - Francis, J. W.
+AU  - Royer, C. J.
+AU  - Cook, P. D.
+C2  - PMC5866932
+DA  - Apr
+DO  - 10.1002/pro.3384
+DP  - NLM
+ET  - 2018/02/09
+IS  - 4
+J2  - Protein science : a publication of the Protein Society
+KW  - Gram-positive
+Staphylococcus aureus
+X-ray crystallography
+bacillithiol
+detoxification
+low-molecular-weight thiol
+transferase
+LA  - eng
+N1  - 1469-896x
+Francis, Joel W
+Royer, Christopher J
+Cook, Paul D
+Journal Article
+United States
+Protein Sci. 2018 Apr;27(4):898-902. doi: 10.1002/pro.3384. Epub 2018 Feb 23.
+PY  - 2018
+SN  - 0961-8368
+SP  - 898-902
+ST  - Structure and function of the bacillithiol-S-transferase BstA from Staphylococcus aureus
+T2  - Protein Sci
+TI  - Structure and function of the bacillithiol-S-transferase BstA from Staphylococcus aureus
+VL  - 27
+ID  - 4
+ER  - 
+
+
+TY  - JOUR
+AB  - The maintenance of thiol-redox homeostasis is vital to the survival of living organisms. Sulfur-based low-molecular weight compounds and proteins synthesized by cells provide efficient and specific ways to counteract oxidative stress and regulate cellular processes. For these tasks, most organisms share the glutathione and thioredoxin NADPH-dependent redox systems. However, in certain lineages, evolution has taken different paths that led to the emergence of novel cysteine-based low-molecular weight redox cofactors, around which new redox systems evolved. These include the sugar-based cysteinyl derivatives mycothiol and bacillithiol, and ergothioneine (EGT), which are present in different phyla from bacteria. Within Eukarya, some fungi contain EGT, whereas trypanothione is unique to species from the Euglenozoa family. This Forum compiles the state-of-the-art knowledge about these noncanonical redox systems of pathogenic organisms. The functions in physiology and pathogenicity, as well as structural and biochemical specializations that these system components evolved, are thoroughly discussed. Antioxid. Redox Signal. 28, 407-409.
+AD  - 1 Departamento de Biociencias, Facultad de Quimica, Universidad de la Republica , Montevideo, Uruguay .
+2 Worm Biology Lab, Institut Pasteur de Montevideo , Montevideo, Uruguay .
+3 Redox Biology of Trypanosomes Lab, Institut Pasteur de Montevideo , Montevideo, Uruguay .
+AN  - 29207877
+AU  - Salinas, G.
+AU  - Comini, M. A.
+DA  - Feb 20
+DO  - 10.1089/ars.2017.7464
+DP  - NLM
+ET  - 2017/12/07
+IS  - 6
+J2  - Antioxidants & redox signaling
+KW  - *bacillithiol
+*ergothioneine
+*mycothiol
+*trypanothione
+LA  - eng
+N1  - 1557-7716
+Salinas, Gustavo
+Comini, Marcelo A
+Editorial
+Research Support, Non-U.S. Gov't
+United States
+Antioxid Redox Signal. 2018 Feb 20;28(6):407-409. doi: 10.1089/ars.2017.7464. Epub 2018 Jan 5.
+PY  - 2018
+SN  - 1523-0864
+SP  - 407-409
+ST  - Alternative Thiol-Based Redox Systems
+T2  - Antioxid Redox Signal
+TI  - Alternative Thiol-Based Redox Systems
+VL  - 28
+ID  - 5
+ER  - 
+
+
+TY  - JOUR
+AB  - Mercury (Hg), one of the most toxic and widely distributed heavy metals, has a high affinity for thiol groups. Thiol groups reduce and sequester Hg. Therefore, low molecular weight and protein thiols may be important cell components used in Hg resistance. To date, the role of low molecular weight thiols in Hg-detoxification remains understudied. The mercury resistance (mer) operon of Thermus thermophilus suggests an evolutionary link between Hg(II) resistance and low molecular weight thiol metabolism. This mer operon encodes for an enzyme involved in methionine biosynthesis, Oah. Challenge with Hg(II) resulted in increased expression of genes involved in the biosynthesis of multiple low molecular weight thiols (cysteine, homocysteine, and bacillithiol), as well as the thioredoxin system. Phenotypic analysis of gene replacement mutants indicated that Oah contributes to Hg resistance under sulfur limiting conditions, and strains lacking bacillithiol and/or thioredoxins are more sensitive to Hg(II) than the wild type. Growth in presence of either a thiol oxidizing agent or a thiol alkylating agent increased sensitivity to Hg(II). Furthermore, exposure to 3 muM Hg(II) consumed all intracellular reduced bacillithiol and cysteine. Database searches indicate that oah2 is present in all Thermus spp. mer operons. The presence of a thiol related gene was also detected in some alphaprotobacterial mer operons, in which a glutathione reductase gene was present, supporting the role of thiols in Hg(II) detoxification. These results have led to a working model in which LMW thiols act as Hg(II) buffering agents while Hg is reduced by MerA.ImportanceThe survival of microorganisms in presence of toxic metals is central to life's sustainability. The affinity of thiol groups to toxic heavy metals drives microbe-metal interactions and modulate metal toxicity. Mercury detoxification (mer) genes likely originated early in microbial evolution among geothermal environments. Little is known about how mer systems interact with cellular thiol systems. Thermus spp. possess a simple mer operon in which a low molecular weight thiol biosynthesis gene is present, along with merR and merA In this study, we present experimental evidence for the role of thiol systems in mercury resistance. Our data suggest that in T. thermophilus thiolated compounds may function side-by-side with mer genes to detoxify mercury. Thus, thiol systems function in consort with mer-mediated resistance to mercury, suggesting exciting new questions for future research.
+AD  - Department of Biochemistry and Microbiology, Rutgers University, USA. javiera.norambuenamorales@rutgers.edu.
+Department of Biochemistry and Microbiology, Rutgers University, USA.
+School of Marine Science and Policy, Delaware Biotechnology Institute and Department of Biological Sciences, University of Delaware, USA.
+AN  - 29150497
+AU  - Norambuena, J.
+AU  - Wang, Y.
+AU  - Hanson, T.
+AU  - Boyd, J. M.
+AU  - Barkay, T.
+C2  - PMC5752852
+DA  - Nov 17
+DO  - 10.1128/aem.01931-17
+DP  - NLM
+ET  - 2017/11/19
+J2  - Applied and environmental microbiology
+LA  - eng
+N1  - 1098-5336
+Norambuena, J
+Wang, Y
+Hanson, T
+Boyd, J M
+Barkay, T
+Journal Article
+United States
+Appl Environ Microbiol. 2017 Nov 17. pii: AEM.01931-17. doi: 10.1128/AEM.01931-17.
+PY  - 2017
+SN  - 0099-2240
+ST  - Low molecular weight thiols and thioredoxins are important players in Hg(II) resistance in Thermus thermophilus HB27
+T2  - Appl Environ Microbiol
+TI  - Low molecular weight thiols and thioredoxins are important players in Hg(II) resistance in Thermus thermophilus HB27
+ID  - 6
+ER  - 
+
+
+TY  - JOUR
+AB  - Hydrogen sulfide (H2S) is thought to protect bacteria from oxidative stress, but a comprehensive understanding of its function in bacteria is largely unexplored. In this study, we show that the human pathogen Staphylococcus aureus (S. aureus) harbors significant effector molecules of H2S signaling, reactive sulfur species (RSS), as low molecular weight persulfides of bacillithiol, coenzyme A, and cysteine, and significant inorganic polysulfide species. We find that proteome S-sulfhydration, a post-translational modification (PTM) in H2S signaling, is widespread in S. aureus. RSS levels modulate the expression of secreted virulence factors and the cytotoxicity of the secretome, consistent with an S-sulfhydration-dependent inhibition of DNA binding by MgrA, a global virulence regulator. Two previously uncharacterized thioredoxin-like proteins, denoted TrxP and TrxQ, are S-sulfhydrated in sulfide-stressed cells and are capable of reducing protein hydrodisulfides, suggesting that this PTM is potentially regulatory in S. aureus. In conclusion, our results reveal that S. aureus harbors a pool of proteome- and metabolite-derived RSS capable of impacting protein activities and gene regulation and that H2S signaling can be sensed by global regulators to affect the expression of virulence factors.
+AD  - Department of Chemistry, Indiana University , 800 E. Kirkwood Drive, Bloomington, Indiana 47405-7102, United States.
+Graduate Program in Biochemistry, Indiana University , 212 S. Hawthorne Drive, Bloomington, Indiana 47405, United States.
+Laboratory for Biological Mass Spectrometry, Department of Chemistry, Indiana University , Simon Hall 120B, 212 S. Hawthorne Drive, Bloomington, Indiana 47405, United States.
+Department of Pathology, Microbiology, and Immunology, Vanderbilt University Medical Center , 1161 21st Avenue South, Nashville, Tennessee 37232-2363, United States.
+Department of Microbiology, University of Illinois Urbana-Champaign , 601 South Goodwin Avenue, Urbana, Illinois 61801, United States.
+Department of Molecular and Cellular Biochemistry, Indiana University , 212 S. Hawthorne Drive, Bloomington, Indiana 47405, United States.
+AN  - 28850209
+AU  - Peng, H.
+AU  - Zhang, Y.
+AU  - Palmer, L. D.
+AU  - Kehl-Fie, T. E.
+AU  - Skaar, E. P.
+AU  - Trinidad, J. C.
+AU  - Giedroc, D. P.
+C2  - PMC5863038
+C6  - NIHMS949794
+DA  - Oct 13
+DO  - 10.1021/acsinfecdis.7b00090
+DP  - NLM
+ET  - 2017/08/30
+IS  - 10
+J2  - ACS infectious diseases
+KW  - Gene Expression Regulation, Bacterial/*drug effects
+Hydrogen Sulfide/*pharmacology
+Proteome
+Staphylococcus aureus/*metabolism/*pathogenicity
+Sulfur/*chemistry/*pharmacology
+Virulence
+S-sulfhydration reduction
+hydrogen sulfide
+post-translational modification
+reactive sulfur species
+secretome
+thiol redox proteome
+LA  - eng
+N1  - 2373-8227
+Peng, Hui
+Zhang, Yixiang
+Palmer, Lauren D
+Kehl-Fie, Thomas E
+Skaar, Eric P
+Trinidad, Jonathan C
+Giedroc, David P
+ORCID: http://orcid.org/0000-0002-2342-1620
+R01 AI069233/AI/NIAID NIH HHS/United States
+R01 GM097225/GM/NIGMS NIH HHS/United States
+F32 AI122516/AI/NIAID NIH HHS/United States
+T32 HL094296/HL/NHLBI NIH HHS/United States
+R01 AI073843/AI/NIAID NIH HHS/United States
+R01 GM030910/GM/NIGMS NIH HHS/United States
+R35 GM118157/GM/NIGMS NIH HHS/United States
+Journal Article
+United States
+ACS Infect Dis. 2017 Oct 13;3(10):744-755. doi: 10.1021/acsinfecdis.7b00090. Epub 2017 Sep 6.
+PY  - 2017
+SN  - 2373-8227
+SP  - 744-755
+ST  - Hydrogen Sulfide and Reactive Sulfur Species Impact Proteome S-Sulfhydration and Global Virulence Regulation in Staphylococcus aureus
+T2  - ACS Infect Dis
+TI  - Hydrogen Sulfide and Reactive Sulfur Species Impact Proteome S-Sulfhydration and Global Virulence Regulation in Staphylococcus aureus
+VL  - 3
+ID  - 7
+ER  - 
+
+
+TY  - JOUR
+AB  - Staphylococcus aureus is a commensal human pathogen and a major cause of nosocomial infections. As gaseous signaling molecules, endogenous hydrogen sulfide (H2S) and nitric oxide (NO.) protect S. aureus from antibiotic stress synergistically, which we propose involves the intermediacy of nitroxyl (HNO). Here, we examine the effect of exogenous sulfide and HNO on the transcriptome and the formation of low-molecular-weight (LMW) thiol persulfides of bacillithiol, cysteine, and coenzyme A as representative of reactive sulfur species (RSS) in wild-type and DeltacstR strains of S. aureus. CstR is a per- and polysulfide sensor that controls the expression of a sulfide oxidation and detoxification system. As anticipated, exogenous sulfide induces the cst operon but also indirectly represses much of the CymR regulon which controls cysteine metabolism. A zinc limitation response is also observed, linking sulfide homeostasis to zinc bioavailability. Cellular RSS levels impact the expression of a number of virulence factors, including the exotoxins, particularly apparent in the DeltacstR strain. HNO, like sulfide, induces the cst operon as well as other genes regulated by exogenous sulfide, a finding that is traced to a direct reaction of CstR with HNO and to an endogenous perturbation in cellular RSS, possibly originating from disassembly of Fe-S clusters. More broadly, HNO induces a transcriptomic response to Fe overload, Cu toxicity, and reactive oxygen species and reactive nitrogen species and shares similarity with the sigB regulon. This work reveals an H2S/NO. interplay in S. aureus that impacts transition metal homeostasis and virulence gene expression. IMPORTANCE Hydrogen sulfide (H2S) is a toxic molecule and a recently described gasotransmitter in vertebrates whose function in bacteria is not well understood. In this work, we describe the transcriptomic response of the major human pathogen Staphylococcus aureus to quantified changes in levels of cellular organic reactive sulfur species, which are effector molecules involved in H2S signaling. We show that nitroxyl (HNO), a recently described signaling intermediate proposed to originate from the interplay of H2S and nitric oxide, also induces changes in cellular sulfur speciation and transition metal homeostasis, thus linking sulfide homeostasis to an adaptive response to antimicrobial reactive nitrogen species.
+AD  - Department of Chemistry, Indiana University, Bloomington, Indiana, USA.
+Graduate Program in Biochemistry, Indiana University, Bloomington, Indiana, USA.
+Department of Molecular and Cellular Biochemistry, Indiana University, Bloomington, Indiana, USA.
+Department of Pathology, Microbiology, and Immunology, Vanderbilt University Medical Center, Nashville, Tennessee, USA.
+Department of Biology, Indiana University, Bloomington, Indiana, USA.
+Department of Microbiology, University of Illinois Urbana-Champaign, Urbana, Illinois, USA.
+AN  - 28656172
+AU  - Peng, H.
+AU  - Shen, J.
+AU  - Edmonds, K. A.
+AU  - Luebke, J. L.
+AU  - Hickey, A. K.
+AU  - Palmer, L. D.
+AU  - Chang, F. J.
+AU  - Bruce, K. A.
+AU  - Kehl-Fie, T. E.
+AU  - Skaar, E. P.
+AU  - Giedroc, D. P.
+C2  - PMC5480029
+DA  - May-Jun
+DO  - 10.1128/mSphere.00082-17
+DP  - NLM
+ET  - 2017/06/29
+IS  - 3
+J2  - mSphere
+KW  - hydrogen sulfide
+nitric oxide
+nitroxyl
+persulfide
+reactive nitrogen species
+reactive sulfur species
+transcriptomics
+LA  - eng
+N1  - Peng, Hui
+Shen, Jiangchuan
+Edmonds, Katherine A
+Luebke, Justin L
+Hickey, Anne K
+Palmer, Lauren D
+Chang, Feng-Ming James
+Bruce, Kevin A
+Kehl-Fie, Thomas E
+Skaar, Eric P
+Giedroc, David P
+Orcid: 0000-0002-2342-1620
+R01 AI069233/AI/NIAID NIH HHS/United States
+F32 AI122516/AI/NIAID NIH HHS/United States
+R01 AI073843/AI/NIAID NIH HHS/United States
+R35 GM118157/GM/NIGMS NIH HHS/United States
+R01 AI118880/AI/NIAID NIH HHS/United States
+Journal Article
+United States
+mSphere. 2017 Jun 21;2(3). pii: mSphere00082-17. doi: 10.1128/mSphere.00082-17. eCollection 2017 May-Jun.
+PY  - 2017
+SN  - 2379-5042 (Print)
+2379-5042
+ST  - Sulfide Homeostasis and Nitroxyl Intersect via Formation of Reactive Sulfur Species in Staphylococcus aureus
+T2  - mSphere
+TI  - Sulfide Homeostasis and Nitroxyl Intersect via Formation of Reactive Sulfur Species in Staphylococcus aureus
+VL  - 2
+ID  - 8
+ER  - 
+
+
+TY  - JOUR
+AB  - SIGNIFICANCE: Since the discovery and structural characterization of bacillithiol (BSH), the biochemical functions of BSH-biosynthesis enzymes (BshA/B/C) and BSH-dependent detoxification enzymes (FosB, Bst, GlxA/B) have been explored in Bacillus and Staphylococcus species. It was shown that BSH plays an important role in detoxification of reactive oxygen and electrophilic species, alkylating agents, toxins, and antibiotics. Recent Advances: More recently, new functions of BSH were discovered in metal homeostasis (Zn buffering, Fe-sulfur cluster, and copper homeostasis) and virulence control in Staphylococcus aureus. Unexpectedly, strains of the S. aureus NCTC8325 lineage were identified as natural BSH-deficient mutants. Modern mass spectrometry-based approaches have revealed the global reach of protein S-bacillithiolation in Firmicutes as an important regulatory redox modification under hypochlorite stress. S-bacillithiolation of OhrR, MetE, and glyceraldehyde-3-phosphate dehydrogenase (Gap) functions, analogous to S-glutathionylation, as both a redox-regulatory device and in thiol protection under oxidative stress. CRITICAL ISSUES: Although the functions of the bacilliredoxin (Brx) pathways in the reversal of S-bacillithiolations have been recently addressed, significantly more work is needed to establish the complete Brx reduction pathway, including the major enzyme(s), for reduction of oxidized BSH (BSSB) and the targets of Brx action in vivo. FUTURE DIRECTIONS: Despite the large number of identified S-bacillithiolated proteins, the physiological relevance of this redox modification was shown for only selected targets and should be a subject of future studies. In addition, many more BSH-dependent detoxification enzymes are evident from previous studies, although their roles and biochemical mechanisms require further study. This review of BSH research also pin-points these missing gaps for future research. Antioxid. Redox Signal. 28, 445-462.
+AD  - 1 Department of Microbiology, Cornell University , Ithaca, New York.
+2 Institute for Biology-Microbiology , Freie Universitat Berlin, Berlin, Germany .
+AN  - 28301954
+AU  - Chandrangsu, P.
+AU  - Loi, V. V.
+AU  - Antelmann, H.
+AU  - Helmann, J. D.
+C2  - PMC5790435
+DA  - Feb 20
+DO  - 10.1089/ars.2017.7057
+DP  - NLM
+ET  - 2017/03/18
+IS  - 6
+J2  - Antioxidants & redox signaling
+KW  - *BSH biosynthesis
+*Bacillus subtilis
+*S-bacillithiolation
+*Staphylococcus aureus
+*bacilliredoxin
+*bacillithiol
+*metal homeostasis
+*methylglyoxal
+LA  - eng
+N1  - 1557-7716
+Chandrangsu, Pete
+Loi, Vu Van
+Antelmann, Haike
+Helmann, John D
+615585/European Research Council/International
+R01 GM059323/GM/NIGMS NIH HHS/United States
+R01 GM109993/GM/NIGMS NIH HHS/United States
+R35 GM122461/GM/NIGMS NIH HHS/United States
+Journal Article
+Research Support, N.I.H., Extramural
+Research Support, Non-U.S. Gov't
+United States
+Antioxid Redox Signal. 2018 Feb 20;28(6):445-462. doi: 10.1089/ars.2017.7057. Epub 2017 Apr 24.
+PY  - 2018
+SN  - 1523-0864
+SP  - 445-462
+ST  - The Role of Bacillithiol in Gram-Positive Firmicutes
+T2  - Antioxid Redox Signal
+TI  - The Role of Bacillithiol in Gram-Positive Firmicutes
+VL  - 28
+ID  - 9
+ER  - 
+
+
+TY  - JOUR
+AB  - Oxidative stress occurs when cells are exposed to elevated levels of reactive oxygen species that can damage biological molecules. One bacterial response to oxidative stress involves disulfide bond formation either between protein thiols or between protein thiols and low-molecular-weight (LMW) thiols. Bacillithiol was recently identified as a major low-molecular-weight thiol in Bacillus subtilis and related Firmicutes. Four genes (bshA, bshB1, bshB2, and bshC) are involved in bacillithiol biosynthesis. The bshA and bshB1 genes are part of a seven-gene operon (ypjD), which includes the essential gene cca, encoding CCA-tRNA nucleotidyltransferase. The inclusion of cca in the operon containing bacillithiol biosynthetic genes suggests that the integrity of the 3' terminus of tRNAs may also be important in oxidative stress. The addition of the 3' terminal CCA sequence by CCA-tRNA nucleotidyltransferase to give rise to a mature tRNA and functional molecules ready for aminoacylation plays an essential role during translation and expression of the genetic code. Any defects in these processes, such as the accumulation of shorter and defective tRNAs under oxidative stress, might exert a deleterious effect on cells. This review summarizes the physiological link between tRNA(Cys) regulation and oxidative stress in Bacillus.
+AD  - Facultad de Quimica, Universidad Autonoma de Queretaro, Cerro de las Campanas s/n, 76010 Queretaro, Qro., Mexico. juan.campos@uaq.mx.
+Department of Biology, Emory University, Atlanta, GA 30322, USA. ghjones@emory.edu.
+Facultad de Ciencias Naturales, Universidad Autonoma de Queretaro, Cerro de las Campanas s/n, 76010 Queretaro, Qro., Mexico. doctorado.cs.uaq@gmail.com.
+Centro de Investigacion y de Estudios Avanzados del IPN, P.O. Box 629, 36500 Irapuato, GTO, Mexico. jhernand@ira.cinvestav.mx.
+Facultad de Quimica, Universidad Autonoma de Queretaro, Cerro de las Campanas s/n, 76010 Queretaro, Qro., Mexico. jacm022003@yahoo.com.mx.
+CONACYT, Centro de Investigacion en Quimica Aplicada, Blvd. Enrique Reyna Hermosillo No. 140, 25294 Saltillo, Coahuila, Mexico. humberto.valenzuela@ciqa.edu.mx.
+Facultad de Quimica, Universidad Autonoma de Queretaro, Cerro de las Campanas s/n, 76010 Queretaro, Qro., Mexico. serpacheco18@gmail.com.
+Facultad de Quimica, Universidad Autonoma de Queretaro, Cerro de las Campanas s/n, 76010 Queretaro, Qro., Mexico. ser69rom@gmail.com.
+Facultad de Medicina, Universidad Autonoma de Queretaro, Cerro de las Campanas s/n, 76010 Queretaro, Qro., Mexico. vmtlalpan@gmail.com.
+AN  - 28117687
+AU  - Campos Guillen, J.
+AU  - Jones, G. H.
+AU  - Saldana Gutierrez, C.
+AU  - Hernandez-Flores, J. L.
+AU  - Cruz Medina, J. A.
+AU  - Valenzuela Soto, J. H.
+AU  - Pacheco Hernandez, S.
+AU  - Romero Gomez, S.
+AU  - Morales Tlalpan, V.
+C2  - PMC5372718
+DA  - Jan 20
+DO  - 10.3390/biom7010006
+DP  - NLM
+ET  - 2017/01/25
+IS  - 1
+J2  - Biomolecules
+KW  - Bacillus subtilis/*genetics/metabolism
+Bacterial Proteins/metabolism
+Cysteine/analogs & derivatives/biosynthesis
+Disulfides/metabolism
+Glucosamine/analogs & derivatives/biosynthesis
+Models, Molecular
+Oxidative Stress
+RNA Nucleotidyltransferases/*metabolism
+RNA, Bacterial/metabolism
+RNA, Transfer, Cys/chemistry/*metabolism
+Bacillus
+bacillithiol
+tRNA
+LA  - eng
+N1  - 2218-273x
+Campos Guillen, Juan
+Jones, George H
+Saldana Gutierrez, Carlos
+Hernandez-Flores, Jose Luis
+Cruz Medina, Julio Alfonso
+Valenzuela Soto, Jose Humberto
+Pacheco Hernandez, Sergio
+Romero Gomez, Sergio
+Morales Tlalpan, Veronica
+Journal Article
+Review
+Switzerland
+Biomolecules. 2017 Jan 20;7(1). pii: biom7010006. doi: 10.3390/biom7010006.
+PY  - 2017
+SN  - 2218-273x
+ST  - Critical Minireview: The Fate of tRNA(Cys) during Oxidative Stress in Bacillus subtilis
+T2  - Biomolecules
+TI  - Critical Minireview: The Fate of tRNA(Cys) during Oxidative Stress in Bacillus subtilis
+VL  - 7
+ID  - 10
+ER  - 
+
+
+TY  - JOUR
+AB  - AIMS: Bacillithiol (BSH) is the major low-molecular-weight thiol of the human pathogen Staphylococcus aureus. In this study, we used OxICAT and Voronoi redox treemaps to quantify hypochlorite-sensitive protein thiols in S. aureus USA300 and analyzed the role of BSH in protein S-bacillithiolation. RESULTS: The OxICAT analyses enabled the quantification of 228 Cys residues in the redox proteome of S. aureus USA300. Hypochlorite stress resulted in >10% increased oxidation of 58 Cys residues (25.4%) in the thiol redox proteome. Among the highly oxidized sodium hypochlorite (NaOCl)-sensitive proteins are five S-bacillithiolated proteins (Gap, AldA, GuaB, RpmJ, and PpaC). The glyceraldehyde-3-phosphate (G3P) dehydrogenase Gap represents the most abundant S-bacillithiolated protein contributing 4% to the total Cys proteome. The active site Cys151 of Gap was very sensitive to overoxidation and irreversible inactivation by hydrogen peroxide (H2O2) or NaOCl in vitro. Treatment with H2O2 or NaOCl in the presence of BSH resulted in reversible Gap inactivation due to S-bacillithiolation, which could be regenerated by the bacilliredoxin Brx (SAUSA300_1321) in vitro. Molecular docking was used to model the S-bacillithiolated Gap active site, suggesting that formation of the BSH mixed disulfide does not require major structural changes. Conclusion and Innovation: Using OxICAT analyses, we identified 58 novel NaOCl-sensitive proteins in the pathogen S. aureus that could play protective roles against the host immune defense and include the glycolytic Gap as major target for S-bacillithiolation. S-bacillithiolation of Gap did not require structural changes, but efficiently functions in redox regulation and protection of the active site against irreversible overoxidation in S. aureus. Antioxid. Redox Signal. 28, 410-430.
+AD  - 1 Institute for Biology-Microbiology, Freie Universitat Berlin , Berlin, Germany .
+2 Laboratory of Structural Biochemistry, Freie Universitat Berlin , Berlin, Germany .
+3 Institute for Microbiology , Ernst-Moritz-Arndt-Universitat of Greifswald, Greifswald, Germany .
+4 Molecular Biomechanics, Interdisciplinary Center for Scientific Computing (IWR), Heidelberg University , Heidelberg, Germany .
+5 Heidelberg Institute of Theoretical Studies , Heidelberg, Germany .
+6 School of Pharmacy, University of East Anglia , Norwich Research Park, Norwich, United Kingdom .
+7 Department Isotope Biogeochemistry, Helmholtz Centre for Environmental Research-UFZ , Leipzig, Germany .
+AN  - 27967218
+AU  - Imber, M.
+AU  - Huyen, N. T. T.
+AU  - Pietrzyk-Brzezinska, A. J.
+AU  - Loi, V. V.
+AU  - Hillion, M.
+AU  - Bernhardt, J.
+AU  - Tharichen, L.
+AU  - Kolsek, K.
+AU  - Saleh, M.
+AU  - Hamilton, C. J.
+AU  - Adrian, L.
+AU  - Grater, F.
+AU  - Wahl, M. C.
+AU  - Antelmann, H.
+C2  - PMC5791933
+DA  - Feb 20
+DO  - 10.1089/ars.2016.6897
+DP  - NLM
+ET  - 2016/12/15
+IS  - 6
+J2  - Antioxidants & redox signaling
+KW  - *Gap
+*S-bacillithiolation
+*Staphylococcus aureus
+*bacilliredoxin
+*thiol-redox proteomics
+LA  - eng
+N1  - 1557-7716
+Imber, Marcel
+Huyen, Nguyen Thi Thu
+Pietrzyk-Brzezinska, Agnieszka J
+Loi, Vu Van
+Hillion, Melanie
+Bernhardt, Jorg
+Tharichen, Lena
+Kolsek, Katra
+Saleh, Malek
+Hamilton, Chris J
+Adrian, Lorenz
+Grater, Frauke
+Wahl, Markus C
+Antelmann, Haike
+615585/European Research Council/International
+Journal Article
+Research Support, Non-U.S. Gov't
+United States
+Antioxid Redox Signal. 2018 Feb 20;28(6):410-430. doi: 10.1089/ars.2016.6897. Epub 2017 Jan 18.
+PY  - 2018
+SN  - 1523-0864
+SP  - 410-430
+ST  - Protein S-Bacillithiolation Functions in Thiol Protection and Redox Regulation of the Glyceraldehyde-3-Phosphate Dehydrogenase Gap in Staphylococcus aureus Under Hypochlorite Stress
+T2  - Antioxid Redox Signal
+TI  - Protein S-Bacillithiolation Functions in Thiol Protection and Redox Regulation of the Glyceraldehyde-3-Phosphate Dehydrogenase Gap in Staphylococcus aureus Under Hypochlorite Stress
+VL  - 28
+ID  - 11
+ER  - 
+
+
+TY  - JOUR
+AB  - AIMS: Bacillithiol (BSH) is utilized as a major thiol-redox buffer in the human pathogen Staphylococcus aureus. Under oxidative stress, BSH forms mixed disulfides with proteins, termed as S-bacillithiolation, which can be reversed by bacilliredoxins (Brx). In eukaryotes, glutaredoxin-fused roGFP2 biosensors have been applied for dynamic live imaging of the glutathione redox potential. Here, we have constructed a genetically encoded bacilliredoxin-fused redox biosensor (Brx-roGFP2) to monitor dynamic changes in the BSH redox potential in S. aureus. RESULTS: The Brx-roGFP2 biosensor showed a specific and rapid response to low levels of bacillithiol disulfide (BSSB) in vitro that required the active-site Cys of Brx. Dynamic live imaging in two methicillin-resistant S. aureus (MRSA) USA300 and COL strains revealed fast and dynamic responses of the Brx-roGFP2 biosensor under hypochlorite and hydrogen peroxide (H2O2) stress and constitutive oxidation of the probe in different BSH-deficient mutants. Furthermore, we found that the Brx-roGFP2 expression level and the dynamic range are higher in S. aureus COL compared with the USA300 strain. In phagocytosis assays with THP-1 macrophages, the biosensor was 87% oxidized in S. aureus COL. However, no changes in the BSH redox potential were measured after treatment with different antibiotics classes, indicating that antibiotics do not cause oxidative stress in S. aureus. Conclusion and Innovation: This Brx-roGFP2 biosensor catalyzes specific equilibration between the BSH and roGFP2 redox couples and can be applied for dynamic live imaging of redox changes in S. aureus and other BSH-producing Firmicutes. Antioxid. Redox Signal. 26, 835-848.
+AD  - 1 Institute for Biology-Microbiology, Freie Universitat Berlin , Berlin, Germany .
+2 Junior Research Group Pathoproteomics, Ernst-Moritz-Arndt-University of Greifswald , Greifswald, Germany .
+3 Institute for Microbiology, Ernst-Moritz-Arndt-University of Greifswald , Greifswald, Germany .
+4 School of Pharmacy, University of East Anglia , Norwich Research Park, Norwich, United Kingdom .
+AN  - 27462976
+AU  - Loi, V. V.
+AU  - Harms, M.
+AU  - Muller, M.
+AU  - Huyen, N. T. T.
+AU  - Hamilton, C. J.
+AU  - Hochgrafe, F.
+AU  - Pane-Farre, J.
+AU  - Antelmann, H.
+C2  - PMC5444506
+DA  - May 20
+DO  - 10.1089/ars.2016.6733
+DP  - NLM
+ET  - 2016/07/28
+IS  - 15
+J2  - Antioxidants & redox signaling
+KW  - Bacterial Proteins/genetics/*metabolism
+*Biosensing Techniques
+Cysteine/*analogs & derivatives/deficiency/genetics/metabolism
+Glucosamine/*analogs & derivatives/deficiency/genetics/metabolism
+Green Fluorescent Proteins/genetics/metabolism
+Oxidation-Reduction
+Staphylococcus aureus/genetics/*metabolism
+Time Factors
+*Staphylococcus aureus
+*bacilliredoxin
+*bacillithiol
+*oxidative stress
+*redox biosensor
+*roGFP
+LA  - eng
+N1  - 1557-7716
+Loi, Vu Van
+Harms, Manuela
+Muller, Marret
+Huyen, Nguyen Thi Thu
+Hamilton, Chris J
+Hochgrafe, Falko
+Pane-Farre, Jan
+Antelmann, Haike
+Journal Article
+Research Support, Non-U.S. Gov't
+United States
+Antioxid Redox Signal. 2017 May 20;26(15):835-848. doi: 10.1089/ars.2016.6733. Epub 2016 Aug 11.
+PY  - 2017
+SN  - 1523-0864
+SP  - 835-848
+ST  - Real-Time Imaging of the Bacillithiol Redox Potential in the Human Pathogen Staphylococcus aureus Using a Genetically Encoded Bacilliredoxin-Fused Redox Biosensor
+T2  - Antioxid Redox Signal
+TI  - Real-Time Imaging of the Bacillithiol Redox Potential in the Human Pathogen Staphylococcus aureus Using a Genetically Encoded Bacilliredoxin-Fused Redox Biosensor
+VL  - 26
+ID  - 12
+ER  - 
+
+
+TY  - JOUR
+AB  - Bacillithiol is a compound produced by several Gram-positive bacterial species, including the human pathogens Staphylococcus aureus and Bacillus anthracis. It is involved in maintaining cellular redox balance as well as the destruction of reactive oxygen species and harmful xenobiotic agents, including the antibiotic fosfomycin. BshA, BshB, and BshC are the enzymes involved in bacillithiol biosynthesis. BshA is a retaining glycosyltransferase responsible for the first committed step in bacillithiol production, namely the addition of N-acetylglucosamine to l-malate. Retaining glycosyltransferases like BshA are proposed to utilize an SNi-like reaction mechanism in which leaving group departure and nucleophilic attack occur on the same face of the hexose. However, significant questions regarding the details of how BshA and similar enzymes accommodate their substrates and facilitate catalysis persist. Here we report X-ray crystallographic structures of BshA from Bacillus subtilis 168 bound with UMP and/or GlcNAc-mal at resolutions of 2.15 and 2.02 A, respectively. These ligand-bound structures, along with our functional and computational studies, provide clearer insight into how BshA and other retaining GT-B glycosyltransferases operate, corroborating the substrate-assisted, SNi-like reaction mechanism. The analyses presented herein can serve as the basis for the design of inhibitors capable of preventing bacillithiol production and, subsequently, help combat resistance to fosfomycin in various pathogenic Gram-positive microorganisms.
+AD  - Department of Chemistry, Grand Valley State University , Allendale, Michigan 49401, United States.
+Department of Cell and Molecular Biology, Grand Valley State University , Allendale, Michigan 49401, United States.
+AN  - 27454321
+AU  - Winchell, K. R.
+AU  - Egeler, P. W.
+AU  - VanDuinen, A. J.
+AU  - Jackson, L. B.
+AU  - Karpen, M. E.
+AU  - Cook, P. D.
+DA  - Aug 23
+DO  - 10.1021/acs.biochem.6b00472
+DP  - NLM
+ET  - 2016/07/28
+IS  - 33
+J2  - Biochemistry
+KW  - Bacillus anthracis/metabolism
+Catalytic Domain
+Crystallization
+Crystallography, X-Ray
+Cysteine/*analogs & derivatives/chemistry
+Glucosamine/*analogs & derivatives/chemistry
+Protein Conformation
+Staphylococcus aureus/metabolism
+LA  - eng
+N1  - 1520-4995
+Winchell, Kelsey R
+Egeler, Paul W
+VanDuinen, Andrew J
+Jackson, Luke B
+Karpen, Mary E
+Cook, Paul D
+R01 GM030910/GM/NIGMS NIH HHS/United States
+F32 GM093507/GM/NIGMS NIH HHS/United States
+Journal Article
+Research Support, N.I.H., Extramural
+Research Support, U.S. Gov't, Non-P.H.S.
+Research Support, Non-U.S. Gov't
+United States
+Biochemistry. 2016 Aug 23;55(33):4654-65. doi: 10.1021/acs.biochem.6b00472. Epub 2016 Aug 11.
+PY  - 2016
+SN  - 0006-2960
+SP  - 4654-65
+ST  - A Structural, Functional, and Computational Analysis of BshA, the First Enzyme in the Bacillithiol Biosynthesis Pathway
+T2  - Biochemistry
+TI  - A Structural, Functional, and Computational Analysis of BshA, the First Enzyme in the Bacillithiol Biosynthesis Pathway
+VL  - 55
+ID  - 13
+ER  - 
+
+
+TY  - JOUR
+AB  - CopZ from Bacillus subtilis is a well-studied member of the highly conserved family of Atx1-like copper chaperones. It was previously shown via solution and crystallographic studies to undergo Cu(i)-mediated dimerisation, where the CopZ dimer can bind between one and four Cu(i) ions. However, these studies could not provide information about the changing distribution of species at increasing Cu(i) levels. To address this, electrospray ionisation mass spectrometry using soft ionisation was applied to CopZ under native conditions. Data revealed folded, monomeric CopZ in apo- and Cu(i)-bound forms, along with Cu(i)-bound dimeric forms of CopZ at higher Cu(i) loading. Cu4(CopZ)2 was the major dimeric species at loadings >1 Cu(i)/CopZ, indicating the cooperative formation of the tetranuclear Cu(i)-bound species. As the principal low molecular weight thiol in B. subtilis, bacillithiol (BSH) may play a role in copper homeostasis. Mass spectrometry showed that increasing BSH led to a reduction in Cu(i)-bound dimeric forms, and the formation of S-bacillithiolated apo-CopZ and BSH adducts of Cu(i)-bound forms of CopZ, where BSH likely acts as a Cu(i) ligand. These data, along with the high affinity of BSH for Cu(i), determined here to be beta2(BSH) = approximately 4 x 10(17) M(-2), are consistent with a role for BSH alongside CopZ in buffering cellular Cu(i) levels. Here, mass spectrometry provides a high resolution overview of CopZ-Cu(i) speciation that cannot be obtained from less discriminating solution-phase methods, thus illustrating the potential for the wider application of this technique to studies of metal-protein interactions.
+AD  - Centre for Molecular and Structural Biochemistry, School of Chemistry, University of East Anglia, Norwich Research Park, Norwich, NR4 7TJ, UK. n.le-brun@uea.ac.uk.
+School of Pharmacy, University of East Anglia, Norwich Research Park, Norwich, NR4 7TJ, UK.
+AN  - 27197762
+AU  - Kay, K. L.
+AU  - Hamilton, C. J.
+AU  - Le Brun, N. E.
+DA  - Jul 13
+DO  - 10.1039/c6mt00036c
+DP  - NLM
+ET  - 2016/05/21
+IS  - 7
+J2  - Metallomics : integrated biometal science
+KW  - Bacillus subtilis/growth & development/*metabolism
+Bacterial Proteins/*metabolism
+Binding Sites
+Copper/*metabolism
+Cysteine/*analogs & derivatives/metabolism
+Glucosamine/*analogs & derivatives/metabolism
+Mass Spectrometry/*methods
+Models, Molecular
+Molecular Chaperones/*metabolism
+Protein Binding
+LA  - eng
+N1  - 1756-591x
+Kay, Kristine L
+Hamilton, Chris J
+Le Brun, Nick E
+Journal Article
+Research Support, Non-U.S. Gov't
+England
+Metallomics. 2016 Jul 13;8(7):709-19. doi: 10.1039/c6mt00036c.
+PY  - 2016
+SN  - 1756-5901
+SP  - 709-19
+ST  - Mass spectrometry of B. subtilis CopZ: Cu(i)-binding and interactions with bacillithiol
+T2  - Metallomics
+TI  - Mass spectrometry of B. subtilis CopZ: Cu(i)-binding and interactions with bacillithiol
+VL  - 8
+ID  - 14
+ER  - 
+
+
+TY  - JOUR
+AB  - The solution and complexation chemistry of zinc ions is the basis for zinc biology. In living organisms, zinc is redox-inert and has only one valence state: Zn(II). Its coordination environment in proteins is limited by oxygen, nitrogen, and sulfur donors from the side chains of a few amino acids. In an estimated 10% of all human proteins, zinc has a catalytic or structural function and remains bound during the lifetime of the protein. However, in other proteins zinc ions bind reversibly with dissociation and association rates commensurate with the requirements in regulation, transport, transfer, sensing, signalling, and storage. In contrast to the extensive knowledge about zinc proteins, the coordination chemistry of the "mobile" zinc ions in these processes, i.e. when not bound to proteins, is virtually unexplored and the mechanisms of ligand exchange are poorly understood. Knowledge of the biological inorganic chemistry of zinc ions is essential for understanding its cellular biology and for designing complexes that deliver zinc to proteins and chelating agents that remove zinc from proteins, for detecting zinc ion species by qualitative and quantitative analysis, and for proper planning and execution of experiments involving zinc ions and nanoparticles such as zinc oxide (ZnO). In most investigations, reference is made to zinc or Zn(2+) without full appreciation of how biological zinc ions are buffered and how the d-block cation Zn(2+) differs from s-block cations such as Ca(2+) with regard to significantly higher affinity for ligands, preference for the donor atoms of ligands, and coordination dynamics. Zinc needs to be tightly controlled. The interaction with low molecular weight ligands such as water and inorganic and organic anions is highly relevant to its biology but in contrast to its coordination in proteins has not been discussed in the biochemical literature. From the discussion in this article, it is becoming evident that zinc ion speciation is important in zinc biochemistry and for biological recognition as a variety of low molecular weight zinc complexes have already been implicated in biological processes, e.g. with ATP, glutathione, citrate, ethylenediaminedisuccinic acid, nicotianamine, or bacillithiol.
+AD  - Laboratory of Chemical Biology, Faculty of Biotechnology, University of Wroclaw, Joliot-Curie 14A, 50-383 Wroclaw, Poland. Electronic address: artur.krezel@uwr.edu.pl.
+King's College London, Metal Metabolism Group, Division of Diabetes and Nutritional Sciences, Department of Biochemistry, Faculty of Life Sciences of Medicine, 150 Stamford Street, London, SE1 9NH, UK. Electronic address: wolfgang.maret@kcl.ac.uk.
+AN  - 27117234
+AU  - Krezel, A.
+AU  - Maret, W.
+C2  - PMC5120989
+DA  - Dec 1
+DO  - 10.1016/j.abb.2016.04.010
+DP  - NLM
+ET  - 2016/04/28
+J2  - Archives of biochemistry and biophysics
+KW  - Anions
+Buffers
+Catalysis
+Cations
+Chelating Agents/chemistry
+*Chemistry, Bioinorganic
+Humans
+Hydrogen-Ion Concentration
+Ligands
+Oxidation-Reduction
+Proteins/chemistry
+Signal Transduction
+Solubility
+Temperature
+Zinc/*chemistry
+*zinc
+*zinc biochemistry
+*zinc biophysics
+*zinc ions
+*zinc speciation
+LA  - eng
+N1  - 1096-0384
+Krezel, Artur
+Maret, Wolfgang
+Journal Article
+United States
+Arch Biochem Biophys. 2016 Dec 1;611:3-19. doi: 10.1016/j.abb.2016.04.010. Epub 2016 Apr 23.
+PY  - 2016
+SN  - 0003-9861
+SP  - 3-19
+ST  - The biological inorganic chemistry of zinc ions
+T2  - Arch Biochem Biophys
+TI  - The biological inorganic chemistry of zinc ions
+VL  - 611
+ID  - 15
+ER  - 
+
+
