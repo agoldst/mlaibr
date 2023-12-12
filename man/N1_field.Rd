@@ -30,18 +30,18 @@ is a problem, but the only case in which I know this to happen is in
 }
 \examples{
 \dontrun{
-b <- read_ris("bib.ris") \%>\%
+b <- read_ris("bib.ris") |>
     spread_ris()
 
 # Extract peer reviewing flag
 # N.B. This information is very incomplete in the MLAIB
-b \%>\%
+b |>
     mutate(peer=N1_field(N1, "Peer Reviewed") == "Yes")
 
 # Extract publication type
 # This is not just a recoding of the RIS field TY. Cross-tabulate.
-b \%>\%
-    mutate(pubtype=N1_field(N1, "Publication Type")) \%>\%
+b |>
+    mutate(pubtype=N1_field(N1, "Publication Type")) |>
     count(TY, pubtype)
 }
 

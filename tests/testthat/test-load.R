@@ -42,56 +42,56 @@ tfile2z <- paste0(tfile2, ".zip")
 zip(tfile2z, tfile2, flags="-r9Xq")
 
 test_that("loading RIS data files works", {
-    mlaibr:::read_ris_file(tfile) %>%
+    mlaibr:::read_ris_file(tfile) |>
         expect_equal(test_target, info="Loading single file")
 
-    read_ris(tfile) %>%
+    read_ris(tfile) |>
         expect_equal(test_target,
                      info="Loading single file with read_ris")
 
-    double_target <- dplyr::bind_rows(test_target, test_target) %>%
+    double_target <- dplyr::bind_rows(test_target, test_target) |>
         dplyr::mutate(id=id + rep(c(0,2), each=12))
 
-    read_ris(c(tfile, tfile)) %>%
+    read_ris(c(tfile, tfile)) |>
         expect_equal(double_target, info="Loading multiple files")
 
-    read_ris(c(tfile, tfile2), src_labels=c("a", "b")) %>%
-        expect_equal(double_target %>% bind_rows(
+    read_ris(c(tfile, tfile2), src_labels=c("a", "b")) |>
+        expect_equal(double_target |> bind_rows(
             tibble::tibble(id=1:4, field="src", value=rep(c("a", "b"), each=2))
-            ) %>% arrange(id),
+            ) |> arrange(id),
                      info="loading with src field")
 
     con <- file(tfile, "r")
-    read_ris(con) %>%
+    read_ris(con) |>
         expect_equal(test_target,
                      info="loading from one connection")
     close(con)
     cons <- lapply(c(tfile, tfile2), file, "r")
-    read_ris(cons) %>%
+    read_ris(cons) |>
         expect_equal(double_target,
                      info="loading from two connections")
     lapply(cons, close)
 
     restricted_fields <- c("TY", "AU", "T1", "KW")
-    read_ris(c(tfile, tfile), fields=restricted_fields) %>%
+    read_ris(c(tfile, tfile), fields=restricted_fields) |>
         expect_equal(
-            double_target %>%
-                dplyr::filter(field %in% restricted_fields) %>%
+            double_target |>
+                dplyr::filter(field %in% restricted_fields) |>
                 dplyr::mutate(id=as.numeric(rep(1:4, times=c(3, 5, 3, 5)))),
             info="Load file with field restriction"
         )
 
-    read_ris(tfilez) %>% expect_equal(test_target,
+    read_ris(tfilez) |> expect_equal(test_target,
                                       info="loading from .zip file name")
 
-    read_ris(c(tfilez, tfile2z)) %>%
+    read_ris(c(tfilez, tfile2z)) |>
         expect_equal(double_target,
                      info="loading from two .zip file names")
 })
 
 test_that("spreading RIS data works", {
-    read_ris(tfile) %>%
-        spread_ris %>%
+    read_ris(tfile) |>
+        spread_ris() |>
         expect_equal(
           tibble::tibble(
             id=as.numeric(1:2),
@@ -114,9 +114,9 @@ for (f in c(tfile, tfile2, tfilez, tfile2z)) {
 context("Raw EndNote output")
 
 test_that("read_ris() can ingest raw EndNote output", {
-  system.file("extdata", "raw_EndNote_output.ris", package = "mlaibr") %>%
-    read_ris %>%
-    spread_ris %>%
-    nrow %>%
+  system.file("extdata", "raw_EndNote_output.ris", package = "mlaibr") |>
+    read_ris() |>
+    spread_ris() |>
+    nrow() |>
     expect_equal(15L)
 })

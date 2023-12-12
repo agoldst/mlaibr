@@ -13,18 +13,6 @@
 NULL
 
 
-#' Pipe operator
-#'
-#' See \code{\link[magrittr]{\%>\%}} for more details.
-#'
-#' @name %>%
-#' @rdname pipe
-#' @keywords internal
-#' @export
-#' @importFrom magrittr %>%
-#' @usage lhs \%>\% rhs
-NULL
-
 # initialize package options if they haven't been set
 .onLoad <- function(libname, pkgname) {
     op_old <- options()

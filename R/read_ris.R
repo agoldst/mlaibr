@@ -133,7 +133,7 @@ read_ris_file <- function(f, src = NULL) {
         dplyr::bind_rows(
           result,
           tibble::tibble(id = ids, field = "src", value = src)
-        ) %>%
+        ) |>
         dplyr::arrange(.data$id)
   }
 
@@ -166,11 +166,15 @@ read_ris_file <- function(f, src = NULL) {
 #' @export
 #'
 spread_ris <- function(x, multi_sep = ";;") {
-  x %>%
-    dplyr::group_by(.data$id, .data$field) %>%
-    dplyr::summarize(value = stringr::str_c(.data$value, collapse = multi_sep)) %>%
-    dplyr::ungroup() %>%
-    tidyr::spread("field", "value", fill = NA)
+  x |>
+    dplyr::group_by(.data$id, .data$field) |>
+    dplyr::reframe(value = stringr::str_c(.data$value, collapse = multi_sep)) |>
+    tidyr::pivot_wider(
+      names_from = "field",
+      values_from = "value",
+      values_fill = NA,
+      names_sort = TRUE
+    )
 }
 
 #' Read in a CSV file of converted RIS data

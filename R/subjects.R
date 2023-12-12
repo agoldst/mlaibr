@@ -53,11 +53,11 @@ strip_subject_relation <- function (x,
 #' @return data frame with \code{id,value} columns
 #'
 #' @export
-subjects_frame <- function(bib, rels=getOption("mlaibr.relations")) {
-  bib %>%
-    dplyr::filter(.data$field == "KW") %>%
-    dplyr::mutate(value = strip_subject_relation(.data$value, rels)) %>%
-    dplyr::select(.data$id, .data$value) %>%
+subjects_frame <- function(bib, rels = getOption("mlaibr.relations")) {
+  bib |>
+    dplyr::filter(.data$field == "KW") |>
+    dplyr::mutate(value = strip_subject_relation(.data$value, rels)) |>
+    dplyr::select("id", "value") |>
     dplyr::distinct(.data$id, .data$value)
 }
 
