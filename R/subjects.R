@@ -20,7 +20,11 @@
 #' @examples
 #'
 #' strip_subject_relation("sources in James, William (1842-1910)")
-#' strip_subject_relation("compared to Wordsworth, William (1770-1850): 'Intimations of Immortality from Recollections of Early Childhood'")
+#' heading <- paste(
+#'   "compared to Wordsworth, William (1770-1850):",
+#'   "'Intimations of Immortality from Recollections of Early Childhood'"
+#' )
+#' strip_subject_relation(heading)
 #'
 #' strip_subject_relation("discusses theories of relationship to realism")
 #'
